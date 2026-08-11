@@ -1,0 +1,30 @@
+<section
+  class="not-prose items-center mb-3 flex flex-col"
+>
+  {{ if .Site.Params.author.image }}
+    {{ $authorImage := resources.Get .Site.Params.author.image }}
+    {{ if $authorImage }}
+      <picture class="mb-2 h-auto w-36 rounded-full">
+        <img
+          width="{{ $authorImage.Width }}"
+          height="{{ $authorImage.Height }}"
+          class="mb-2 h-auto w-36 rounded-full"
+          src="{{ $authorImage.RelPermalink }}"
+          alt="{{ .Site.Params.author.name }}"
+        />
+      </picture>
+    {{ end }}
+  {{ end }}
+
+  <h1 class="text-4xl font-bold">
+    {{ .Site.Params.author.name | default .Site.Title }}
+  </h1>
+  {{ with .Site.Params.author.headline }}
+    <h2 class="text-xl text-neutral-500 dark:text-neutral-400">
+      {{ . }}
+    </h2>
+  {{ end }}
+  <div class="mt-1 text-2xl">
+    {{ partial "author-links.html" . }}
+  </div>
+</section>

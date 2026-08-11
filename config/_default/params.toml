@@ -1,0 +1,51 @@
+colorScheme = "congo"
+defaultAppearance = "dark"
+autoSwitchAppearance = true
+
+enableSearch = false
+enableCodeCopy = true
+enableImageLazyLoading = true
+enableImageWebp = true
+enableQuicklink = true
+fingerprintAlgorithm = "sha256"
+
+[header]
+layout = "basic"
+showTitle = true
+title = "Sārthak M."
+
+[footer]
+showCopyright = true
+showThemeAttribution = false
+showAppearanceSwitcher = true
+showScrollToTop = true
+
+[homepage]
+layout = "profile"
+showRecent = false
+
+[article]
+showDate = false
+showDateUpdated = false
+showAuthor = false
+showBreadcrumbs = false
+showDraftLabel = false
+showEdit = false
+showHeadingAnchors = true
+showPagination = false
+showReadingTime = false
+showTableOfContents = false
+showTaxonomies = false
+showWordCount = false
+showComments = false
+sharingLinks = false
+
+[list]
+showBreadcrumbs = false
+showSummary = true
+showTableOfContents = false
+showTaxonomies = false
+groupByYear = false
+
+[sitemap]
+excludedKinds = ["taxonomy", "term"]

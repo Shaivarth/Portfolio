@@ -1,0 +1,24 @@
+locale = "en"
+label = "English"
+weight = 1
+
+title = "Sarthak Mishra"
+copyright = "© 2026 Sarthak M."
+
+[params]
+description = "Cybersecurity and backend development portfolio."
+
+[params.author]
+name = "Sarthak Mishra"
+image = "img/author.jpg"
+headline = "Cybersecurity · Backend Development · Linux Systems"
+bio = "Computer Science student building practical security tools, backend systems, and network monitoring solutions."
+links = [
+  { github = "https://github.com/Shaivarth" },
+  { linkedin = "https://www.linkedin.com/in/shaivarth/" },
+  { instagram = "https://www.instagram.com/shaivarth/" },
+  { x-twitter = "https://x.com/shaivarth" },
+  { tryhackme = "https://tryhackme.com/p/sarthakmishra" },
+  { globe = "https://blog.shaivarth.com/" },
+  { email = "mailto:sarthakatwork08@gmail.com" }
+]

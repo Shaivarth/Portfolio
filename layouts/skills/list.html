@@ -1,0 +1,30 @@
+{{ define "main" }}
+  <header>
+    {{ if .Params.showBreadcrumbs | default (.Site.Params.list.showBreadcrumbs | default false) }}
+      {{ partial "breadcrumbs.html" . }}
+    {{ end }}
+    <h1 class="mt-0 text-4xl font-bold tracking-normal text-neutral-900 dark:text-neutral">{{ .Title }}</h1>
+  </header>
+  <section class="mt-0 prose flex max-w-full flex-col dark:prose-invert lg:flex-row">
+    <div class="min-h-0 min-w-0 max-w-prose grow">
+      {{ .Content | emojify }}
+    </div>
+  </section>
+  {{ if .Params.skills }}
+    <section class="mt-8">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; font-size: 1.25rem; font-weight: 700; line-height: 2.25rem;">
+        {{ range $index, $element := .Params.skills }}
+          {{ if gt $index 0 }}
+            <span style="margin-left: 20px; margin-right: 20px; opacity: 0.4; font-weight: 400; user-select: none;">&middot;</span>
+          {{ end }}
+          <span
+            style="text-decoration: underline; text-decoration-color: rgb(var(--color-primary-500, 139, 92, 246)); text-underline-offset: 2px; text-decoration-thickness: 2px;"
+            class="text-neutral-800 hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400 transition-colors duration-150 cursor-default"
+          >
+            {{ $element }}
+          </span>
+        {{ end }}
+      </div>
+    </section>
+  {{ end }}
+{{ end }}

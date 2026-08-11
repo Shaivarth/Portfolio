@@ -1,0 +1,56 @@
+<header class="py-6 font-semibold text-neutral-900 dark:text-neutral sm:py-10 print:hidden">
+  <nav class="flex items-start justify-between sm:items-center">
+    <div class="flex flex-row items-center">
+      <a
+        class="text-neutral-800 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400 transition-colors flex items-center"
+        aria-label="Home"
+        title="Home"
+        rel="me"
+        href="{{ "" | relLangURL }}"
+      >
+        <svg fill="currentColor" class="w-6 h-6" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M27 18.039L16 9.501 5 18.039V14.56l11-8.54 11 8.538v3.481zm-2.75-.31v8.251h-5.5v-5.5h-5.5v5.5h-5.5v-8.25L16 11.543l8.25 6.186z"></path></g></svg>
+      </a>
+    </div>
+    {{ if .Site.Menus.main }}
+      <ul class="flex list-none flex-col text-end sm:flex-row">
+        {{ range .Site.Menus.main }}
+          <li class="group mb-1 sm:mb-0 sm:me-7 sm:last:me-0.5">
+            {{ if eq .Params.action "appearance" }}
+              {{ if site.Params.footer.showAppearanceSwitcher | default false }}
+                <button
+                  id="appearance-switcher-1"
+                  type="button"
+                  aria-label="appearance switcher"
+                >
+                  <span
+                    class="group-dark:hover:text-primary-400 inline transition-colors group-hover:text-primary-600 dark:hidden"
+                    title="{{ i18n "footer.dark_appearance" }}"
+                  >
+                    {{ partial "icon.html" "moon" }}
+                  </span>
+                  <span
+                    class="group-dark:hover:text-primary-400 hidden transition-colors group-hover:text-primary-600 dark:inline"
+                    title="{{ i18n "footer.light_appearance" }}"
+                  >
+                    {{ partial "icon.html" "sun" }}
+                  </span>
+                </button>
+              {{ end }}
+            {{ else }}
+              <a
+                href="{{ .URL }}"
+                title="{{ .Title | default .Name }}"
+                {{ if .Params.target }}target="{{ .Params.target }}"{{ end }}
+                ><span
+                    class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2"
+                    >{{ .Name }}</span
+                  >
+                </a
+              >
+            {{ end }}
+          </li>
+        {{ end }}
+      </ul>
+    {{ end }}
+  </nav>
+</header>
