@@ -6,8 +6,12 @@ repo_dir = r"c:\Users\sarth\Downloads\shaivarth-portfolio"
 public_dir = os.path.join(repo_dir, "public")
 temp_dir = os.path.join(repo_dir, ".gh-pages-deploy")
 
+# Run clean production build
+print("Building production site with Hugo...")
+subprocess.run(["hugo", "--gc", "--minify", "-e", "production"], cwd=repo_dir, check=True)
+
 if os.path.exists(temp_dir):
-    shutil.rmtree(temp_dir)
+    shutil.rmtree(temp_dir, onerror=remove_readonly)
 
 # Copy all contents from public to temp_dir
 shutil.copytree(public_dir, temp_dir)
