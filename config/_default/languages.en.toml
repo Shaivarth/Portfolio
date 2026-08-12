@@ -11,7 +11,7 @@ description = "Cybersecurity and backend development portfolio."
 [params.author]
 name = "Sarthak Mishra"
 image = "img/author.jpg"
-headline = "Cybersecurity · Backend Development · Linux Systems"
+headline = "Cybersecurity · Backend Development · Linux"
 bio = "Computer Science student building practical security tools, backend systems, and network monitoring solutions."
 links = [
   { github = "https://github.com/Shaivarth" },
