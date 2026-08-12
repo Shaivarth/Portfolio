@@ -7,11 +7,12 @@
     {{ if .Site.Params.author.image }}
       {{ $authorImage := resources.Get .Site.Params.author.image }}
       {{ if $authorImage }}
-        <picture class="mb-2 block h-36 w-36 aspect-square overflow-hidden rounded-full">
+        <picture class="mb-2 block aspect-square overflow-hidden rounded-full" style="width: 176px; height: 176px;">
           <img
             width="{{ $authorImage.Width }}"
             height="{{ $authorImage.Height }}"
-            class="block h-36 w-36 aspect-square object-cover rounded-full"
+            class="block aspect-square object-cover rounded-full"
+            style="width: 176px; height: 176px;"
             src="{{ $authorImage.RelPermalink }}"
             alt="{{ .Site.Params.author.name }}"
           />
