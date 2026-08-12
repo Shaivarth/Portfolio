@@ -7,13 +7,18 @@ article section h1 {
   font-family: inherit;
 }
 
-/* Enlarge profile picture circle on front page by ~22% (144px -> 176px) */
-.not-prose picture.rounded-full,
-.not-prose picture img.rounded-full,
-.not-prose img.rounded-full {
-  width: 176px !important;
-  height: 176px !important;
-  max-width: 176px !important;
-  max-height: 176px !important;
+/* Enlarge profile picture circle on front page by 25% (144px -> 180px) */
+.not-prose picture,
+.not-prose picture img,
+.not-prose img.rounded-full,
+article section picture,
+article section picture img {
+  width: 180px !important;
+  height: 180px !important;
+  max-width: 180px !important;
+  max-height: 180px !important;
+  min-width: 180px !important;
+  min-height: 180px !important;
   object-fit: cover !important;
+  border-radius: 9999px !important;
 }
