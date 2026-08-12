@@ -22,3 +22,38 @@ article section picture img {
   object-fit: cover !important;
   border-radius: 9999px !important;
 }
+
+/* Purple theme color overrides */
+:root {
+  --color-primary-50: 245, 243, 255;
+  --color-primary-100: 237, 233, 254;
+  --color-primary-200: 221, 214, 254;
+  --color-primary-300: 196, 181, 253;
+  --color-primary-400: 167, 139, 250;
+  --color-primary-500: 139, 92, 246;
+  --color-primary-600: 124, 58, 237;
+  --color-primary-700: 109, 40, 217;
+  --color-primary-800: 91, 33, 182;
+  --color-primary-900: 76, 29, 149;
+}
+
+.text-primary-600 {
+  color: rgb(124 58 237) !important;
+}
+
+.dark .text-primary-400 {
+  color: rgb(167 139 250) !important;
+}
+
+.decoration-primary-500 {
+  text-decoration-color: rgb(139 92 246) !important;
+}
+
+.hover\:text-primary-600:hover {
+  color: rgb(124 58 237) !important;
+}
+
+.dark .dark\:hover\:text-primary-400:hover {
+  color: rgb(167 139 250) !important;
+}
+
