@@ -1,7 +1,8 @@
 ---
-title: "eagle"
-description: "EXIF metadata and geolocation extraction tool."
-weight: 40
+title: "Eagle"
+description: "Drop an image into Eagle and it instantly rips open its EXIF data to drop a pin-point location right where it was taken."
+icon: "eagle"
+weight: 10
 ---
 
 **Eagle** is an image forensics and metadata extraction tool.

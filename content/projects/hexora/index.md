@@ -1,22 +1,13 @@
 ---
-title: "hexora"
-description: "Static malware analysis platform."
-weight: 10
+title: "Hexora"
+description: "hexora inspects files of any kind without executing them and performs static analysis to identify potentially suspicious characteristics."
+icon: "bug"
+weight: 20
 ---
 
-**hexora** is a static malware analysis platform built with Python and FastAPI.
+**Hexora** is a static malware analysis platform built with Python and FastAPI.
 
-It inspects suspicious files without executing them and combines several signals to produce a practical risk assessment.
-
-### What it does
-
-- File hashing
-- Entropy analysis
-- Metadata extraction
-- String scanning
-- Heuristic risk scoring
-- PDF report generation
-- Web dashboard
+It inspects suspicious files of any format without executing them, analyzing file structures, entropy, extracted strings, and metadata to generate a comprehensive risk assessment report.
 
 **Stack:** Python · FastAPI · Static Analysis · Security
 

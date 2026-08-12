@@ -1,7 +1,9 @@
 ---
 title: "xentinel"
 description: "A small real-time SOC simulation."
-weight: 30
+icon: "website"
+weight: 99
+draft: true
 ---
 
 **xentinel** is a real-time SOC simulation built around Linux telemetry, log pipelines, alerting, and a small monitoring dashboard.
