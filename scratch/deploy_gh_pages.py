@@ -20,6 +20,12 @@ subprocess.run(["git", "commit", "-m", "Deploy complete site to gh-pages"], chec
 subprocess.run(["git", "remote", "add", "origin", "https://github.com/Shaivarth/Portfolio.git"], check=True)
 subprocess.run(["git", "push", "-f", "origin", "gh-pages"], check=True)
 
+def remove_readonly(func, path, exc_info):
+    import stat
+    os.chmod(path, stat.S_IWRITE)
+    func(path)
+
 os.chdir(repo_dir)
-shutil.rmtree(temp_dir)
+if os.path.exists(temp_dir):
+    shutil.rmtree(temp_dir, onerror=remove_readonly)
 print("Pushed complete site to gh-pages successfully!")
