@@ -18,6 +18,7 @@ links = [
   { linkedin = "https://www.linkedin.com/in/shaivarth/" },
   { instagram = "https://www.instagram.com/shaivarth/" },
   { x-twitter = "https://x.com/shaivarth" },
+  { mastodon = "https://mastodon.social/@shaivarth" },
   { tryhackme = "https://tryhackme.com/p/sarthakmishra" },
   { globe = "https://blog.shaivarth.com/" },
   { email = "mailto:sarthakatwork08@gmail.com" }
