@@ -21,5 +21,6 @@ links = [
   { mastodon = "https://mastodon.social/@shaivarth" },
   { tryhackme = "https://tryhackme.com/p/sarthakmishra" },
   { globe = "https://blog.shaivarth.com/" },
-  { email = "mailto:sarthakatwork08@gmail.com" }
+  { email = "mailto:sarthakatwork08@gmail.com" },
+  { gitlab = "https://gitlab.com/sarthakmishra" }
 ]
