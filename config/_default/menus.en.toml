@@ -1,31 +1,31 @@
 [[main]]
 name = "about"
-pageRef = "about"
+url = "/about/"
 weight = 10
 
 [[main]]
 name = "projects"
-pageRef = "projects"
+url = "/projects/"
 weight = 20
 
 [[main]]
 name = "skills"
-pageRef = "skills"
+url = "/skills/"
 weight = 30
 
 [[main]]
 name = "experience"
-pageRef = "experience"
+url = "/experience/"
 weight = 35
 
 [[main]]
 name = "socials"
-pageRef = "socials"
+url = "/socials/"
 weight = 40
 
 [[main]]
 name = "connect"
-pageRef = "connect"
+url = "/connect/"
 weight = 50
 
 [[main]]

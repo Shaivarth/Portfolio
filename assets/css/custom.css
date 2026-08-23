@@ -57,3 +57,23 @@ article section picture img {
   color: rgb(167 139 250) !important;
 }
 
+/* Completely hide all scrollbars everywhere while keeping smooth scrolling */
+html,
+body,
+*,
+*::before,
+*::after {
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE and Edge */
+}
+
+::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+}
+
+#to-top {
+  display: none !important;
+}
