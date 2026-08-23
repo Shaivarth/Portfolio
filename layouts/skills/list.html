@@ -1,30 +1,243 @@
 {{ define "main" }}
-  <header>
-    {{ if .Params.showBreadcrumbs | default (.Site.Params.list.showBreadcrumbs | default false) }}
-      {{ partial "breadcrumbs.html" . }}
-    {{ end }}
-    <h1 class="mt-0 text-4xl font-bold tracking-normal text-neutral-900 dark:text-neutral">{{ .Title }}</h1>
-  </header>
-  <section class="mt-0 prose flex max-w-full flex-col dark:prose-invert lg:flex-row">
-    <div class="min-h-0 min-w-0 max-w-prose grow">
-      {{ .Content | emojify }}
-    </div>
-  </section>
-  {{ if .Params.skills }}
-    <section class="mt-8">
-      <div style="display: flex; flex-wrap: wrap; align-items: center; font-size: 1.25rem; font-weight: 700; line-height: 2.25rem;">
-        {{ range $index, $element := .Params.skills }}
-          {{ if gt $index 0 }}
-            <span style="margin-left: 20px; margin-right: 20px; opacity: 0.4; font-weight: 400; user-select: none;">&middot;</span>
-          {{ end }}
-          <span
-            style="text-decoration: underline; text-decoration-color: rgb(var(--color-primary-500, 139, 92, 246)); text-underline-offset: 2px; text-decoration-thickness: 2px;"
-            class="text-neutral-800 hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400 transition-colors duration-150 cursor-default"
-          >
-            {{ $element }}
-          </span>
-        {{ end }}
-      </div>
-    </section>
+<header class="skills-page-header">
+  {{ if .Params.showBreadcrumbs | default (.Site.Params.list.showBreadcrumbs | default false) }}
+  <div class="w-full mb-3">
+    {{ partial "breadcrumbs.html" . }}
+  </div>
   {{ end }}
+  <div class="skills-title-group">
+    <h1 id="skills-page-title" class="skills-heading text-neutral-900 dark:text-neutral">
+      {{ .Title }}
+    </h1>
+    <button id="skills-toggle-btn" type="button" class="skills-toggle-btn" aria-label="Toggle text visibility"
+      title="Toggle read/no-read mode">
+      <span id="toggle-btn-label">No Read</span>
+    </button>
+  </div>
+</header>
+
+<section class="skills-container mt-6">
+  <div class="skills-narrative" id="bionic-text">
+    {{ .Content | emojify }}
+  </div>
+</section>
+
+<style>
+  .skills-page-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .skills-title-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .skills-heading {
+    margin: 0 !important;
+    font-size: 2.25rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+
+  @media (max-width: 640px) {
+    .skills-heading {
+      font-size: 1.65rem;
+    }
+  }
+
+  .skills-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 6px;
+    padding: 0.22rem 0.65rem;
+    font-size: 0.775rem;
+    font-weight: 700;
+    border-radius: 4px;
+    background-color: #f1f5f9;
+    color: #334155;
+    border: 1px solid #cbd5e1;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.15s ease;
+    line-height: 1.25;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+
+  :is(.dark) .skills-toggle-btn {
+    background-color: #27272a;
+    color: #e4e4e7;
+    border-color: #52525b;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+
+  .skills-toggle-btn:hover {
+    border-color: rgb(var(--color-primary-500, 139, 92, 246));
+    color: rgb(var(--color-primary-500, 139, 92, 246));
+    background-color: rgba(139, 92, 246, 0.08);
+  }
+
+  :is(.dark) .skills-toggle-btn:hover {
+    border-color: rgb(var(--color-primary-400, 167, 139, 250));
+    color: rgb(var(--color-primary-400, 167, 139, 250));
+    background-color: rgba(139, 92, 246, 0.15);
+  }
+
+  .skills-toggle-btn.active {
+    background-color: rgb(var(--color-primary-600, 124, 58, 237)) !important;
+    color: #ffffff !important;
+    border-color: rgb(var(--color-primary-600, 124, 58, 237)) !important;
+  }
+
+  .skills-container,
+  .skills-narrative {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .skills-narrative p {
+    width: 100% !important;
+    max-width: 100% !important;
+    font-size: 1.15rem;
+    line-height: 2.25rem;
+    color: #374151;
+    margin-top: 0;
+    margin-bottom: 1.75rem;
+    text-align: justify;
+    letter-spacing: 0.01em;
+  }
+
+  :is(.dark) .skills-narrative p {
+    color: #d4d4d8;
+  }
+
+  .bionic-bold {
+    font-weight: 700;
+    color: #111827;
+  }
+
+  :is(.dark) .bionic-bold {
+    color: #f9fafb;
+  }
+
+  .bionic-tail {
+    opacity: 0.78;
+    font-weight: 400;
+  }
+
+  .skill-highlight {
+    text-decoration: underline;
+    text-decoration-color: rgb(var(--color-primary-500, 139, 92, 246));
+    text-underline-offset: 3px;
+    text-decoration-thickness: 2px;
+    font-weight: 700;
+    color: #111827;
+    cursor: default;
+    transition: color 0.15s ease;
+    display: inline;
+  }
+
+  :is(.dark) .skill-highlight {
+    color: #f3f4f6;
+  }
+
+  .skill-highlight:hover {
+    color: rgb(var(--color-primary-600, 124, 58, 237));
+  }
+
+  :is(.dark) .skill-highlight:hover {
+    color: rgb(var(--color-primary-400, 192, 132, 252));
+  }
+
+  /* Disappearing / Ghost text effect while keeping exact in-place layout */
+  .narrative-chunk,
+  .narrative-word,
+  .bionic-bold,
+  .bionic-tail {
+    transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .skills-narrative.skills-isolate-mode .narrative-chunk,
+  .skills-narrative.skills-isolate-mode .narrative-word,
+  .skills-narrative.skills-isolate-mode .bionic-bold,
+  .skills-narrative.skills-isolate-mode .bionic-tail {
+    opacity: 0 !important;
+    user-select: none;
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  (function () {
+    function initSkillsNarrative() {
+      const container = document.getElementById("bionic-text");
+      if (container) {
+        const walker = document.createTreeWalker(
+          container,
+          NodeFilter.SHOW_TEXT,
+          {
+            acceptNode: function (node) {
+              if (node.parentElement && node.parentElement.closest(".skill-highlight")) {
+                return NodeFilter.FILTER_REJECT;
+              }
+              return NodeFilter.FILTER_ACCEPT;
+            }
+          },
+          false
+        );
+
+        const textNodes = [];
+        while (walker.nextNode()) {
+          if (walker.currentNode.nodeValue.trim().length > 0) {
+            textNodes.push(walker.currentNode);
+          }
+        }
+
+        textNodes.forEach((node) => {
+          const text = node.nodeValue;
+          const formatted = text.replace(/([a-zA-Z0-9À-ž]+)/g, function (word) {
+            const boldLen = word.length <= 3 ? 1 : Math.ceil(word.length * 0.45);
+            const boldPart = word.slice(0, boldLen);
+            const restPart = word.slice(boldLen);
+            return `<span class="narrative-word"><b class="bionic-bold">${boldPart}</b><span class="bionic-tail">${restPart}</span></span>`;
+          });
+
+          const span = document.createElement("span");
+          span.className = "narrative-chunk";
+          span.innerHTML = formatted;
+          node.parentNode.replaceChild(span, node);
+        });
+      }
+
+      // Toggle in-place skills isolation
+      const toggleBtn = document.getElementById("skills-toggle-btn");
+      const toggleLabel = document.getElementById("toggle-btn-label");
+      const pageTitle = document.getElementById("skills-page-title");
+      const originalTitle = pageTitle ? pageTitle.innerText.trim() : "";
+
+      if (toggleBtn && container) {
+        toggleBtn.addEventListener("click", function () {
+          const isIsolated = container.classList.toggle("skills-isolate-mode");
+          toggleBtn.classList.toggle("active", isIsolated);
+          if (toggleLabel) {
+            toggleLabel.innerText = isIsolated ? "Read" : "No Read";
+          }
+          if (pageTitle) {
+            pageTitle.innerText = isIsolated ? "fair enough, ~10 seconds now" : originalTitle;
+          }
+        });
+      }
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initSkillsNarrative);
+    } else {
+      initSkillsNarrative();
+    }
+  })();
+</script>
 {{ end }}

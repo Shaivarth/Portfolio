@@ -1,12 +1,8 @@
 ---
-title: "Me"
+title: " "
 description: "A little about me and what I work on."
 ---
 
-I'm a computer science undergrad focused on **cybersecurity and backend development**. 
+Hi, I'm <a href="https://shaivarth.com" class="name-link">Sarthak</a>. I build things in **defensive security** and **backend engineering** mostly around threat detection, packet analysis, and network telemetry. I like taking things apart, figuring out why they work, and building my own tools from the ground up.
 
-My interests sit around Linux, networking, security operations, Python, and backend systems. I like taking something apart, figuring out why it works, and then building my own version of it.
-
-I don't particularly care for making projects look complicated. If a small script solves the problem, that's usually better than a 14-library stack.
-
-This is my professional website, i also have a blog page where i share my thoughts on various topics, ([blog](https://blog.shaivarth.com/)), here you can find more about me and my thoughts.
+Outside of tech, I spend time reading philosophy, and writing down thoughts on my [blog](https://blog.shaivarth.com/) site. Feel free to [reach out](/connect/) for a chat.

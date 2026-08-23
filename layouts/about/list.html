@@ -1,0 +1,92 @@
+{{ define "main" }}
+  <div class="about-fullscreen-wrapper">
+    {{ if and .Title (ne (trim .Title " ") "") }}
+      <header class="about-header mb-6">
+        {{ if .Params.showBreadcrumbs | default (.Site.Params.list.showBreadcrumbs | default false) }}
+          {{ partial "breadcrumbs.html" . }}
+        {{ end }}
+        <h1 class="mt-0 text-4xl font-bold tracking-normal text-neutral-900 dark:text-neutral">{{ .Title }}</h1>
+      </header>
+    {{ end }}
+    
+    <section class="about-container">
+      <div class="about-narrative">
+        {{ .Content | emojify }}
+      </div>
+    </section>
+  </div>
+
+  <style>
+    .about-fullscreen-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: calc(100vh - 240px);
+      max-width: 720px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 1.5rem 0;
+    }
+    .about-container,
+    .about-narrative {
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+    .about-narrative p {
+      width: 100% !important;
+      max-width: 100% !important;
+      font-size: 1.18rem;
+      line-height: 2.25rem;
+      color: #374151;
+      margin-top: 0;
+      margin-bottom: 1.75rem;
+      text-align: justify;
+      text-justify: inter-word;
+    }
+    .about-narrative p:last-child {
+      margin-bottom: 0;
+    }
+    :is(.dark) .about-narrative p {
+      color: #d4d4d8;
+    }
+    .about-narrative a {
+      color: rgb(var(--color-primary-600, 124, 58, 237));
+      text-decoration: underline;
+      text-decoration-color: rgb(var(--color-primary-500, 139, 92, 246));
+      text-underline-offset: 2px;
+      transition: color 0.15s ease;
+    }
+    .about-narrative a:hover {
+      color: rgb(var(--color-primary-700, 109, 40, 217));
+    }
+    :is(.dark) .about-narrative a {
+      color: rgb(var(--color-primary-400, 192, 132, 252));
+    }
+    :is(.dark) .about-narrative a:hover {
+      color: rgb(var(--color-primary-300, 216, 180, 254));
+    }
+
+    .about-narrative a.name-link {
+      color: rgb(var(--color-primary-600, 124, 58, 237)) !important;
+      text-decoration: none !important;
+      font-weight: inherit;
+    }
+    .about-narrative a.name-link:hover {
+      color: rgb(var(--color-primary-700, 109, 40, 217)) !important;
+    }
+    :is(.dark) .about-narrative a.name-link {
+      color: rgb(var(--color-primary-400, 192, 132, 252)) !important;
+    }
+    :is(.dark) .about-narrative a.name-link:hover {
+      color: rgb(var(--color-primary-300, 216, 180, 254)) !important;
+    }
+
+    .about-narrative strong {
+      font-weight: 700;
+      color: #111827;
+    }
+    :is(.dark) .about-narrative strong {
+      color: #f3f4f6;
+    }
+  </style>
+{{ end }}

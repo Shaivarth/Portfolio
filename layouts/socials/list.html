@@ -1,0 +1,99 @@
+{{ define "main" }}
+<header>
+  {{ if .Params.showBreadcrumbs | default (.Site.Params.list.showBreadcrumbs | default false) }}
+  {{ partial "breadcrumbs.html" . }}
+  {{ end }}
+  <h1 class="mt-0 text-4xl font-bold tracking-normal text-neutral-900 dark:text-neutral">{{ .Title }}</h1>
+</header>
+
+<section class="mt-6 max-w-full">
+  {{ if .Content }}
+  <div class="socials-intro text-lg text-neutral-700 dark:text-neutral-300 mb-8 leading-relaxed">
+    {{ .Content | emojify }}
+  </div>
+  {{ end }}
+
+  <ul class="socials-list list-none p-0 m-0 space-y-4">
+    <li class="social-item flex items-center text-lg">
+      <span class="social-icon text-neutral-600 dark:text-neutral-400 flex items-center justify-center flex-shrink-0">
+        {{ partial "icon.html" "x-twitter" }}
+      </span>
+      <a href="https://x.com/shaivarth" target="_blank" rel="noopener noreferrer"
+        class="social-link">x.com/shaivarth</a>
+    </li>
+    <li class="social-item flex items-center text-lg">
+      <span class="social-icon text-neutral-600 dark:text-neutral-400 flex items-center justify-center flex-shrink-0">
+        {{ partial "icon.html" "instagram" }}
+      </span>
+      <a href="https://www.instagram.com/shaivarth/" target="_blank" rel="noopener noreferrer"
+        class="social-link">instagram.com/shaivarth</a>
+    </li>
+    <li class="social-item flex items-center text-lg">
+      <span class="social-icon text-neutral-600 dark:text-neutral-400 flex items-center justify-center flex-shrink-0">
+        {{ partial "icon.html" "mastodon" }}
+      </span>
+      <a href="https://mastodon.social/@shaivarth" target="_blank" rel="noopener noreferrer"
+        class="social-link">mastodon.social/@shaivarth</a>
+    </li>
+    <li class="social-item flex items-center text-lg">
+      <span class="social-icon text-neutral-600 dark:text-neutral-400 flex items-center justify-center flex-shrink-0">
+        {{ partial "icon.html" "globe" }}
+      </span>
+      <a href="https://blog.shaivarth.com/" target="_blank" rel="noopener noreferrer"
+        class="social-link">blog.shaivarth.com</a>
+    </li>
+  </ul>
+</section>
+
+<style>
+  .socials-intro {
+    max-width: 580px;
+    text-wrap: balance;
+    -webkit-text-wrap: balance;
+    line-height: 1.75rem;
+  }
+
+  .socials-list {
+    list-style: none !important;
+    padding-left: 0 !important;
+  }
+
+  .social-item {
+    margin-bottom: 1.15rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .social-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 14px;
+  }
+
+  .social-icon svg {
+    width: 22px;
+    height: 22px;
+    display: inline-block;
+  }
+
+  .social-link {
+    color: rgb(var(--color-primary-600, 124, 58, 237));
+    text-decoration: underline;
+    text-decoration-color: rgb(var(--color-primary-500, 139, 92, 246));
+    text-underline-offset: 2px;
+    transition: color 0.15s ease;
+  }
+
+  .social-link:hover {
+    color: rgb(var(--color-primary-700, 109, 40, 217));
+  }
+
+  :is(.dark) .social-link {
+    color: rgb(var(--color-primary-400, 192, 132, 252));
+  }
+
+  :is(.dark) .social-link:hover {
+    color: rgb(var(--color-primary-300, 216, 180, 254));
+  }
+</style>
+{{ end }}
