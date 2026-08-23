@@ -1,6 +1,6 @@
 ---
 title: "Eagle"
-description: "Drop an image into Eagle and it instantly rips open its EXIF data to drop a pin-point location right where it was taken."
+description: "Drop an image into Eagle and it instantly rips open its EXIF data to drop a pin-point location right where it was taken, with other useful details."
 icon: "eagle"
 weight: 10
 ---

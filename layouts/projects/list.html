@@ -12,7 +12,7 @@
   </section>
 
   {{ if .Data.Pages }}
-    <section style="margin-top: 1.25rem !important;">
+    <section class="projects-grid" style="margin-top: 1.25rem !important;">
       {{ range .Pages.ByWeight }}
         <div class="group project-item flex flex-row items-start">
           <div class="flex-none me-4 mt-1.5 text-neutral-500 dark:text-neutral-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors" style="margin-right: 18px; margin-top: 4px;">
@@ -38,10 +38,17 @@
     </section>
 
     <style>
-      .project-item {
-        margin-bottom: 1.35rem !important;
+      .projects-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.35rem 3rem;
       }
-      .project-item:last-child {
+      @media (min-width: 768px) {
+        .projects-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      .project-item {
         margin-bottom: 0 !important;
       }
       .github-link {
@@ -59,7 +66,7 @@
       }
     </style>
 
-    <div class="text-base text-neutral-600 dark:text-neutral-400" style="margin-top: 1.5rem !important;">
+    <div class="text-base text-neutral-600 dark:text-neutral-400" style="margin-top: 1.75rem !important;">
       See more projects I'm working on at
       <a
         class="github-link"

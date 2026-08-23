@@ -2,7 +2,7 @@
 title: "Arpex"
 description: "arpex is an arp spoofing detection system that scans local network traffic, tracks arp mappings, and send alerts on a dashboard."
 icon: "wifi"
-weight: 30
+weight: 40
 ---
 
 **arpex** is a network monitoring tool designed to detect ARP spoofing and suspicious changes in local network mappings.

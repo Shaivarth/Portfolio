@@ -2,7 +2,7 @@
 title: "Hexora"
 description: "hexora inspects files of any kind without executing them and performs static analysis to identify potentially suspicious characteristics."
 icon: "bug"
-weight: 20
+weight: 30
 ---
 
 **Hexora** is a static malware analysis platform built with Python and FastAPI.
