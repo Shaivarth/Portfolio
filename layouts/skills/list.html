@@ -1,242 +1,283 @@
 {{ define "main" }}
-<header class="skills-page-header">
+{{ $skills := sort .Params.skills }}
+{{ $letters := slice }}
+{{ range $skills }}
+  {{ $first := upper (substr . 0 1) }}
+  {{ if not (in $letters $first) }}
+    {{ $letters = $letters | append $first }}
+  {{ end }}
+{{ end }}
+
+<header class="skills-header mb-6">
   {{ if .Params.showBreadcrumbs | default (.Site.Params.list.showBreadcrumbs | default false) }}
   <div class="w-full mb-3">
     {{ partial "breadcrumbs.html" . }}
   </div>
   {{ end }}
-  <div class="skills-title-group">
-    <h1 id="skills-page-title" class="skills-heading text-neutral-900 dark:text-neutral">
-      {{ .Title }}
-    </h1>
-    <button id="skills-toggle-btn" type="button" class="skills-toggle-btn" aria-label="Toggle text visibility"
-      title="Toggle read/no-read mode">
-      <span id="toggle-btn-label">No Read</span>
-    </button>
-  </div>
+  <h1 class="mt-0 text-4xl font-bold tracking-normal text-neutral-900 dark:text-neutral">
+    {{ .Title }}
+  </h1>
+  {{ if .Params.description }}
+  <p class="mt-2 text-base text-neutral-500 dark:text-neutral-400">
+    {{ .Params.description }}
+  </p>
+  {{ end }}
 </header>
 
-<section class="skills-container mt-6">
-  <div class="skills-narrative" id="bionic-text">
-    {{ .Content | emojify }}
+<nav class="skills-filter-nav mb-8" aria-label="Filter skills by initial letter">
+  <div class="skills-alphabet-bar">
+    <button type="button" class="alphabet-btn active" data-letter="all" aria-pressed="true">
+      All
+    </button>
+    {{ range $letters }}
+    <button type="button" class="alphabet-btn" data-letter="{{ . }}" aria-pressed="false">
+      {{ . }}
+    </button>
+    {{ end }}
+  </div>
+</nav>
+
+<section class="skills-section" aria-label="Skills list">
+  <div class="skills-grid" id="skills-grid">
+    {{ range $letter := $letters }}
+    <div class="skill-letter-group" data-letter="{{ $letter }}">
+      <div class="skill-letter-header">{{ $letter }}</div>
+      <ul class="skill-items-list">
+        {{ range $skills }}
+          {{ if eq (upper (substr . 0 1)) $letter }}
+          <li class="skill-item">
+            <span class="skill-bullet" aria-hidden="true">•</span>
+            <span class="skill-name">{{ . }}</span>
+          </li>
+          {{ end }}
+        {{ end }}
+      </ul>
+    </div>
+    {{ end }}
   </div>
 </section>
 
 <style>
-  .skills-page-header {
-    margin-bottom: 1.5rem;
+  .skills-header {
+    margin-bottom: 1.75rem;
   }
 
-  .skills-title-group {
+  .skills-filter-nav {
+    margin-bottom: 2.25rem;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .skills-alphabet-bar {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
+    gap: 0.65rem 1rem;
+    max-width: 680px;
+    margin: 0 auto;
+    text-align: center;
   }
 
-  .skills-heading {
-    margin: 0 !important;
-    font-size: 2.25rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 1.25;
+  .alphabet-btn {
+    display: inline-block;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 0.15rem 0.25rem;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: #64748b;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.15s ease, border-color 0.15s ease;
+    line-height: 1.2;
+    border-radius: 0;
+    box-shadow: none;
   }
 
-  @media (max-width: 640px) {
-    .skills-heading {
-      font-size: 1.65rem;
+  :is(.dark) .alphabet-btn {
+    background: transparent;
+    color: #a1a1aa;
+    border-bottom-color: transparent;
+    box-shadow: none;
+  }
+
+  .alphabet-btn:hover {
+    color: #111827;
+    background: transparent;
+    border-bottom-color: rgba(17, 24, 39, 0.4);
+  }
+
+  :is(.dark) .alphabet-btn:hover {
+    color: #ffffff;
+    background: transparent;
+    border-bottom-color: rgba(255, 255, 255, 0.4);
+  }
+
+  .alphabet-btn.active {
+    color: #111827 !important;
+    background: transparent !important;
+    font-weight: 700 !important;
+    border-bottom: 2px solid #111827 !important;
+    box-shadow: none !important;
+  }
+
+  :is(.dark) .alphabet-btn.active {
+    color: #ffffff !important;
+    background: transparent !important;
+    font-weight: 700 !important;
+    border-bottom: 2px solid #ffffff !important;
+    box-shadow: none !important;
+  }
+
+  .skills-grid {
+    column-count: 1;
+    column-gap: 2rem;
+    width: 100%;
+  }
+
+  @media (min-width: 540px) {
+    .skills-grid {
+      column-count: 2;
+      column-gap: 2rem;
     }
   }
 
-  .skills-toggle-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 6px;
-    padding: 0.22rem 0.65rem;
-    font-size: 0.775rem;
+  @media (min-width: 800px) {
+    .skills-grid {
+      column-count: 3;
+      column-gap: 2.25rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .skills-grid {
+      column-count: 4;
+      column-gap: 2.25rem;
+    }
+  }
+
+  .skill-letter-group {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 2rem;
+  }
+
+  .skill-letter-header {
+    font-size: 1.25rem;
     font-weight: 700;
-    border-radius: 4px;
-    background-color: #f1f5f9;
-    color: #334155;
-    border: 1px solid #cbd5e1;
-    cursor: pointer;
-    user-select: none;
-    transition: all 0.15s ease;
-    line-height: 1.25;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    color: #111827;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 0.35rem;
+    margin-bottom: 0.65rem;
+    letter-spacing: 0.02em;
   }
 
-  :is(.dark) .skills-toggle-btn {
-    background-color: #27272a;
-    color: #e4e4e7;
-    border-color: #52525b;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  :is(.dark) .skill-letter-header {
+    color: #ffffff;
+    border-bottom-color: rgba(255, 255, 255, 0.15);
   }
 
-  .skills-toggle-btn:hover {
-    border-color: rgb(var(--color-primary-500, 139, 92, 246));
-    color: rgb(var(--color-primary-500, 139, 92, 246));
-    background-color: rgba(139, 92, 246, 0.08);
+  .skill-items-list {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
 
-  :is(.dark) .skills-toggle-btn:hover {
-    border-color: rgb(var(--color-primary-400, 167, 139, 250));
-    color: rgb(var(--color-primary-400, 167, 139, 250));
-    background-color: rgba(139, 92, 246, 0.15);
-  }
-
-  .skills-toggle-btn.active {
-    background-color: rgb(var(--color-primary-600, 124, 58, 237)) !important;
-    color: #ffffff !important;
-    border-color: rgb(var(--color-primary-600, 124, 58, 237)) !important;
-  }
-
-  .skills-container,
-  .skills-narrative {
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-
-  .skills-narrative p {
-    width: 100% !important;
-    max-width: 100% !important;
-    font-size: 1.15rem;
-    line-height: 2.25rem;
+  .skill-item {
+    display: flex;
+    align-items: center;
+    font-size: 1.05rem;
+    line-height: 1.5;
     color: #374151;
-    margin-top: 0;
-    margin-bottom: 1.75rem;
-    text-align: justify;
-    letter-spacing: 0.01em;
+    padding: 0.25rem 0;
+    transition: color 0.15s ease;
   }
 
-  :is(.dark) .skills-narrative p {
+  :is(.dark) .skill-item {
     color: #d4d4d8;
   }
 
-  .bionic-bold {
-    font-weight: 700;
+  .skill-item:hover {
     color: #111827;
   }
 
-  :is(.dark) .bionic-bold {
-    color: #f9fafb;
+  :is(.dark) .skill-item:hover {
+    color: #ffffff;
   }
 
-  .bionic-tail {
-    opacity: 0.78;
-    font-weight: 400;
-  }
-
-  .skill-highlight {
-    text-decoration: underline;
-    text-decoration-color: rgb(var(--color-primary-500, 139, 92, 246));
-    text-underline-offset: 3px;
-    text-decoration-thickness: 2px;
-    font-weight: 700;
-    color: #111827;
-    cursor: default;
+  .skill-bullet {
+    color: #9ca3af;
+    margin-right: 0.65rem;
+    font-size: 1.15rem;
+    line-height: 1;
+    flex-shrink: 0;
     transition: color 0.15s ease;
-    display: inline;
   }
 
-  :is(.dark) .skill-highlight {
-    color: #f3f4f6;
+  :is(.dark) .skill-bullet {
+    color: #52525b;
   }
 
-  .skill-highlight:hover {
-    color: rgb(var(--color-primary-600, 124, 58, 237));
+  .skill-item:hover .skill-bullet {
+    color: #4b5563;
   }
 
-  :is(.dark) .skill-highlight:hover {
-    color: rgb(var(--color-primary-400, 192, 132, 252));
+  :is(.dark) .skill-item:hover .skill-bullet {
+    color: #e4e4e7;
   }
 
-  /* Disappearing / Ghost text effect while keeping exact in-place layout */
-  .narrative-chunk,
-  .narrative-word,
-  .bionic-bold,
-  .bionic-tail {
-    transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .skills-narrative.skills-isolate-mode .narrative-chunk,
-  .skills-narrative.skills-isolate-mode .narrative-word,
-  .skills-narrative.skills-isolate-mode .bionic-bold,
-  .skills-narrative.skills-isolate-mode .bionic-tail {
-    opacity: 0 !important;
-    user-select: none;
-    pointer-events: none;
+  .skill-name {
+    display: inline-block;
   }
 </style>
 
 <script>
   (function () {
-    function initSkillsNarrative() {
-      const container = document.getElementById("bionic-text");
-      if (container) {
-        const walker = document.createTreeWalker(
-          container,
-          NodeFilter.SHOW_TEXT,
-          {
-            acceptNode: function (node) {
-              if (node.parentElement && node.parentElement.closest(".skill-highlight")) {
-                return NodeFilter.FILTER_REJECT;
-              }
-              return NodeFilter.FILTER_ACCEPT;
-            }
-          },
-          false
-        );
+    function initSkillFilter() {
+      const buttons = document.querySelectorAll('.skills-alphabet-bar .alphabet-btn');
+      const groups = document.querySelectorAll('.skills-grid .skill-letter-group');
+      if (!buttons.length || !groups.length) return;
 
-        const textNodes = [];
-        while (walker.nextNode()) {
-          if (walker.currentNode.nodeValue.trim().length > 0) {
-            textNodes.push(walker.currentNode);
+      function setActiveFilter(selectedLetter) {
+        buttons.forEach(btn => {
+          const letter = btn.getAttribute('data-letter');
+          const isActive = letter === selectedLetter;
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+
+        groups.forEach(group => {
+          const groupLetter = group.getAttribute('data-letter');
+          if (selectedLetter === 'all' || groupLetter === selectedLetter) {
+            group.style.display = '';
+          } else {
+            group.style.display = 'none';
           }
-        }
-
-        textNodes.forEach((node) => {
-          const text = node.nodeValue;
-          const formatted = text.replace(/([a-zA-Z0-9À-ž]+)/g, function (word) {
-            const boldLen = word.length <= 3 ? 1 : Math.ceil(word.length * 0.45);
-            const boldPart = word.slice(0, boldLen);
-            const restPart = word.slice(boldLen);
-            return `<span class="narrative-word"><b class="bionic-bold">${boldPart}</b><span class="bionic-tail">${restPart}</span></span>`;
-          });
-
-          const span = document.createElement("span");
-          span.className = "narrative-chunk";
-          span.innerHTML = formatted;
-          node.parentNode.replaceChild(span, node);
         });
       }
 
-      // Toggle in-place skills isolation
-      const toggleBtn = document.getElementById("skills-toggle-btn");
-      const toggleLabel = document.getElementById("toggle-btn-label");
-      const pageTitle = document.getElementById("skills-page-title");
-      const originalTitle = pageTitle ? pageTitle.innerText.trim() : "";
+      buttons.forEach(btn => {
+        btn.addEventListener('click', function () {
+          const letter = this.getAttribute('data-letter');
+          const isCurrentlyActive = this.classList.contains('active');
 
-      if (toggleBtn && container) {
-        toggleBtn.addEventListener("click", function () {
-          const isIsolated = container.classList.toggle("skills-isolate-mode");
-          toggleBtn.classList.toggle("active", isIsolated);
-          if (toggleLabel) {
-            toggleLabel.innerText = isIsolated ? "Read" : "No Read";
-          }
-          if (pageTitle) {
-            pageTitle.innerText = isIsolated ? "fair enough, ~10 seconds now" : originalTitle;
+          // If clicking active letter that is not 'all', toggle back to 'all'
+          if (isCurrentlyActive && letter !== 'all') {
+            setActiveFilter('all');
+          } else {
+            setActiveFilter(letter);
           }
         });
-      }
+      });
     }
 
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", initSkillsNarrative);
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initSkillFilter);
     } else {
-      initSkillsNarrative();
+      initSkillFilter();
     }
   })();
 </script>

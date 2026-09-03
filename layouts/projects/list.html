@@ -1,79 +1,79 @@
 {{ define "main" }}
-  <header>
-    {{ if .Params.showBreadcrumbs | default (.Site.Params.list.showBreadcrumbs | default false) }}
-      {{ partial "breadcrumbs.html" . }}
-    {{ end }}
-    <h1 class="mt-0 text-4xl font-bold tracking-normal text-neutral-900 dark:text-neutral">{{ .Title }}</h1>
-  </header>
-  <section class="mt-0 prose flex max-w-full flex-col dark:prose-invert lg:flex-row">
-    <div class="min-h-0 min-w-0 max-w-prose grow">
-      {{ .Content | emojify }}
-    </div>
-  </section>
-
-  {{ if .Data.Pages }}
-    <section class="projects-grid" style="margin-top: 1.25rem !important;">
-      {{ range .Pages.ByWeight }}
-        <div class="group project-item flex flex-row items-start">
-          <div class="flex-none me-4 mt-1.5 text-neutral-500 dark:text-neutral-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors" style="margin-right: 18px; margin-top: 4px;">
-            {{ partial "project-icon.html" (.Params.icon | default "code") }}
-          </div>
-          <div class="grow">
-            <h2 class="mt-0 mb-0 text-xl font-bold leading-snug text-neutral-900 dark:text-neutral">
-              <a
-                class="text-neutral-800 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400 decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 transition-colors"
-                href="{{ .Permalink }}"
-              >
-                {{ .Title }}
-              </a>
-            </h2>
-            {{ if .Params.description }}
-              <p class="mt-1 mb-0 text-base text-neutral-500 dark:text-neutral-400" style="margin-top: 4px; max-width: 530px; text-wrap: balance; -webkit-text-wrap: balance;">
-                {{ .Params.description }}
-              </p>
-            {{ end }}
-          </div>
-        </div>
-      {{ end }}
-    </section>
-
-    <style>
-      .projects-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 1.35rem 3rem;
-      }
-      @media (min-width: 768px) {
-        .projects-grid {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-      }
-      .project-item {
-        margin-bottom: 0 !important;
-      }
-      .github-link {
-        color: #c084fc !important;
-        font-weight: 600;
-        padding: 0px 2px;
-        border-radius: 0px !important;
-        text-decoration: none !important;
-        transition: all 0.2s ease;
-      }
-      .github-link:hover {
-        background-color: #7c3aed !important;
-        color: #ffffff !important;
-        text-decoration: none !important;
-      }
-    </style>
-
-    <div class="text-base text-neutral-600 dark:text-neutral-400" style="margin-top: 1.75rem !important;">
-      See more projects I'm working on at
-      <a
-        class="github-link"
-        href="https://github.com/Shaivarth"
-        target="_blank"
-        rel="noreferrer"
-      >GitHub</a> &rarr;
-    </div>
+<header>
+  {{ if .Params.showBreadcrumbs | default (.Site.Params.list.showBreadcrumbs | default false) }}
+  {{ partial "breadcrumbs.html" . }}
   {{ end }}
+  <h1 class="mt-0 text-4xl font-bold tracking-normal text-neutral-900 dark:text-neutral">{{ .Title }}</h1>
+</header>
+<section class="mt-0 prose flex max-w-full flex-col dark:prose-invert lg:flex-row">
+  <div class="min-h-0 min-w-0 max-w-prose grow">
+    {{ .Content | emojify }}
+  </div>
+</section>
+
+{{ if .Data.Pages }}
+<section class="projects-grid" style="margin-top: 1.25rem !important;">
+  {{ range .Pages.ByWeight }}
+  <div class="group project-item flex flex-row items-start">
+    <div
+      class="flex-none me-4 mt-1.5 text-neutral-500 dark:text-neutral-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors"
+      style="margin-right: 18px; margin-top: 4px;">
+      {{ partial "project-icon.html" (.Params.icon | default "code") }}
+    </div>
+    <div class="grow">
+      <h2 class="mt-0 mb-0 text-xl font-bold leading-snug text-neutral-900 dark:text-neutral">
+        <a class="text-neutral-800 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400 decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 transition-colors"
+          href="{{ .Permalink }}">
+          {{ .Title }}
+        </a>
+      </h2>
+      {{ if .Params.description }}
+      <p class="mt-1 mb-0 text-base text-neutral-500 dark:text-neutral-400"
+        style="margin-top: 4px; max-width: 530px; text-wrap: balance; -webkit-text-wrap: balance;">
+        {{ .Params.description }}
+      </p>
+      {{ end }}
+    </div>
+  </div>
+  {{ end }}
+</section>
+
+<style>
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.35rem 3rem;
+  }
+
+  @media (min-width: 768px) {
+    .projects-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .project-item {
+    margin-bottom: 0 !important;
+  }
+
+  .github-link {
+    color: #c084fc !important;
+    font-weight: 600;
+    padding: 0px 2px;
+    border-radius: 0px !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease;
+  }
+
+  .github-link:hover {
+    background-color: #7c3aed !important;
+    color: #ffffff !important;
+    text-decoration: none !important;
+  }
+</style>
+
+<div class="text-base text-neutral-600 dark:text-neutral-400" style="margin-top: 1.75rem !important;">
+  See more projects I'm working on at
+  <a class="github-link" href="https://github.com/Shaivarth" target="_blank" rel="noreferrer">GitHub</a> &rarr;
+</div>
+{{ end }}
 {{ end }}
