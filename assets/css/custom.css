@@ -57,6 +57,50 @@ article section picture img {
   color: rgb(167 139 250) !important;
 }
 
+/* Heading links inherit heading color (white bold in dark mode) */
+.prose :where(h1, h2, h3, h4, h5, h6) a {
+  color: inherit !important;
+  font-weight: inherit !important;
+  text-decoration: none !important;
+}
+
+.prose :where(h1, h2, h3, h4, h5, h6) a:hover {
+  color: rgb(167 139 250) !important;
+  text-decoration: underline !important;
+}
+
+/* Use theme purple instead of pink for prose links */
+.prose a {
+  color: rgb(124 58 237) !important;
+  text-decoration-color: rgb(139 92 246) !important;
+}
+
+.dark .prose a {
+  color: rgb(167 139 250) !important;
+  text-decoration-color: rgb(139 92 246) !important;
+}
+
+.dark .prose a:hover {
+  color: rgb(196 181 253) !important;
+}
+
+/* Clean pure white bold text in dark mode */
+.dark .prose strong,
+.dark .prose b {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+/* Ensure inline code tags are never pink and render in white bold */
+.prose :not(pre) > code,
+.dark .prose :not(pre) > code {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  padding: 0.15rem 0.35rem !important;
+  border-radius: 0.25rem !important;
+}
+
 /* Completely hide all scrollbars everywhere while keeping smooth scrolling */
 html,
 body,
