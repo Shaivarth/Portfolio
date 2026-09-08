@@ -1,6 +1,6 @@
 ---
 title: "SigmaHQ / sigma"
-description: "The Generic Signature Format for SIEM Systems, providing an open and vendor-agnostic standard for threat detection rules."
+description:
 weight: 10
 ---
 
