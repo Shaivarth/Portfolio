@@ -23,6 +23,31 @@ article section picture img {
   border-radius: 9999px !important;
 }
 
+/* Front page coderagent mascot styling */
+.agent-avatar-wrapper {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin-bottom: 1.25rem !important;
+}
+
+.agent-avatar {
+  width: 170px !important;
+  max-width: 170px !important;
+  min-width: unset !important;
+  min-height: unset !important;
+  height: auto !important;
+  max-height: none !important;
+  display: block !important;
+  object-fit: contain !important;
+  border-radius: 0 !important;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
 /* Purple theme color overrides */
 :root {
   --color-primary-50: 245, 243, 255;

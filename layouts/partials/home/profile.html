@@ -4,6 +4,29 @@
   <section
     class="not-prose items-center mb-3 flex flex-col"
   >
+    {{ $imagePath := .Site.Params.author.image | default "img/coderagent.png" }}
+    {{ $image := resources.Get $imagePath }}
+    {{ if $image }}
+      <div class="agent-avatar-wrapper mb-3">
+        <img
+          src="{{ $image.RelPermalink }}"
+          width="{{ $image.Width }}"
+          height="{{ $image.Height }}"
+          alt="{{ .Site.Params.author.name | default .Site.Title }}"
+          class="agent-avatar"
+          loading="eager"
+        />
+      </div>
+    {{ else }}
+      <div class="agent-avatar-wrapper mb-3">
+        <img
+          src="{{ $imagePath | relURL }}"
+          alt="{{ .Site.Params.author.name | default .Site.Title }}"
+          class="agent-avatar"
+          loading="eager"
+        />
+      </div>
+    {{ end }}
 
     <h1 class="text-4xl font-bold tracking-normal">
       {{ .Site.Params.author.name | default .Site.Title }}
