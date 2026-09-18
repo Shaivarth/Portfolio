@@ -24,7 +24,7 @@
     {{ end }}
     <div class="grow">
       <h2 class="mt-0 mb-0 text-xl font-bold leading-snug text-neutral-900 dark:text-neutral">
-        <a class="text-neutral-800 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400 decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 transition-colors"
+        <a class="text-neutral-800 dark:text-neutral transition-colors"
           href="{{ .Permalink }}">
           {{ .Title }}
         </a>
@@ -42,19 +42,35 @@
 
 <style>
   .projects-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.35rem 3rem;
-  }
-
-  @media (min-width: 768px) {
-    .projects-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
   }
 
   .project-item {
     margin-bottom: 0 !important;
+  }
+
+  .project-item h2 a {
+    text-decoration: underline !important;
+    text-decoration-color: rgb(139, 92, 246) !important;
+    text-decoration-thickness: 2px !important;
+    text-underline-offset: 4px !important;
+    transition: all 0.2s ease;
+  }
+
+  :is(.dark) .project-item h2 a {
+    text-decoration-color: rgb(167, 139, 250) !important;
+  }
+
+  .project-item h2 a:hover {
+    color: rgb(124, 58, 237) !important;
+    text-decoration-color: rgb(124, 58, 237) !important;
+  }
+
+  :is(.dark) .project-item h2 a:hover {
+    color: rgb(196, 181, 253) !important;
+    text-decoration-color: rgb(196, 181, 253) !important;
   }
 
   .github-link {

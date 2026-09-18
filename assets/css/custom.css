@@ -146,3 +146,9 @@ body,
 #to-top {
   display: none !important;
 }
+
+/* Hide heading anchor symbols */
+a[aria-label="Anchor"],
+:is(h1, h2, h3, h4, h5, h6) .group-hover\:opacity-100 {
+  display: none !important;
+}
