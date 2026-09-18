@@ -1,10 +1,10 @@
 ---
-title: "projectdiscovery / nuclei-templates"
+title: "ProjectDiscovery / nuclei-templates"
 description:
 weight: 20
 ---
 
-Contributions to [projectdiscovery/nuclei-templates](https://github.com/projectdiscovery/nuclei-templates), the community-curated vulnerability scanning template library for the Nuclei engine.
+Contributions to [ProjectDiscovery/nuclei-templates](https://github.com/projectdiscovery/nuclei-templates), the community-curated vulnerability scanning template library for the Nuclei engine.
 
 ### [#17240](https://github.com/projectdiscovery/nuclei-templates/pull/17240): fix: prevent false positive in CVE-2026-31807
 

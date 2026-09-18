@@ -13,15 +13,6 @@ name = "open source"
 url = "/open-source/"
 weight = 25
 
-[[main]]
-name = "skills"
-url = "/skills/"
-weight = 30
-
-[[main]]
-name = "experience"
-url = "/experience/"
-weight = 35
 
 [[main]]
 name = "connect"

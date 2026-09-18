@@ -1,5 +1,5 @@
 ---
-title: "open source"
+title: "open source contributions"
 description: "Things I'm contributing to in open source."
 ---
 

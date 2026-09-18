@@ -1,57 +1,79 @@
 {{ define "main" }}
-<header>
-  {{ if .Params.showBreadcrumbs | default (.Site.Params.list.showBreadcrumbs | default false) }}
-  {{ partial "breadcrumbs.html" . }}
-  {{ end }}
-  <h1 class="mt-0 text-4xl font-bold tracking-normal text-neutral-900 dark:text-neutral">{{ .Title }}</h1>
-</header>
-<section class="mt-0 prose flex max-w-full flex-col dark:prose-invert lg:flex-row">
-  <div class="min-h-0 min-w-0 max-w-prose grow">
-    {{ .Content | emojify }}
-  </div>
-</section>
-
-{{ if .Data.Pages }}
-<section class="projects-grid" style="margin-top: 1.25rem !important;">
-  {{ range .Pages.ByWeight }}
-  <div class="group project-item flex flex-row items-start">
-    {{ if .Params.icon }}
-    <div
-      class="flex-none me-4 mt-1.5 text-neutral-500 dark:text-neutral-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors"
-      style="margin-right: 18px; margin-top: 4px;">
-      {{ partial "project-icon.html" .Params.icon }}
-    </div>
+<div class="open-source-wrapper flex flex-col items-center text-center">
+  <header class="w-full text-center">
+    {{ if .Params.showBreadcrumbs | default (.Site.Params.list.showBreadcrumbs | default false) }}
+    {{ partial "breadcrumbs.html" . }}
     {{ end }}
-    <div class="grow">
-      <h2 class="mt-0 mb-0 text-xl font-bold leading-snug text-neutral-900 dark:text-neutral">
-        <a class="text-neutral-800 dark:text-neutral transition-colors"
-          href="{{ .Permalink }}">
-          {{ .Title }}
-        </a>
-      </h2>
-      {{ if .Params.description }}
-      <p class="mt-1 mb-0 text-base text-neutral-500 dark:text-neutral-400"
-        style="margin-top: 4px; max-width: 530px; text-wrap: balance; -webkit-text-wrap: balance;">
-        {{ .Params.description }}
-      </p>
-      {{ end }}
+    <h1 class="mt-0 text-4xl font-bold tracking-normal text-neutral-900 dark:text-neutral text-center">{{ .Title }}</h1>
+  </header>
+  
+  <section class="mt-0 prose flex max-w-full flex-col dark:prose-invert text-center mx-auto">
+    <div class="min-h-0 min-w-0 max-w-prose mx-auto text-neutral-600 dark:text-neutral-400 text-center">
+      {{ .Content | emojify }}
     </div>
+  </section>
+
+  {{ if .Data.Pages }}
+  <div class="os-table-container">
+    <table class="os-invisible-table" role="presentation">
+      <tbody>
+        <tr>
+          {{ range .Pages.ByWeight }}
+          <td class="os-table-cell">
+            <h2 class="mt-0 mb-0 text-xl font-bold leading-snug text-neutral-900 dark:text-neutral">
+              <a class="text-neutral-800 dark:text-neutral transition-colors"
+                href="{{ .Permalink }}">
+                {{ .Title }}
+              </a>
+            </h2>
+          </td>
+          {{ end }}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="text-base text-neutral-600 dark:text-neutral-400 text-center" style="margin-top: 2rem !important;">
+    Explore all my open source activity on
+    <a class="github-link" href="https://github.com/Shaivarth" target="_blank" rel="noreferrer">GitHub</a> &rarr;
   </div>
   {{ end }}
-</section>
+</div>
 
 <style>
-  .projects-grid {
+  .open-source-wrapper {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 1.15rem;
+    align-items: center;
+    text-align: center;
   }
 
-  .project-item {
-    margin-bottom: 0 !important;
+  .os-table-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1.75rem;
   }
 
-  .project-item h2 a {
+  .os-invisible-table {
+    border-collapse: separate !important;
+    border-spacing: 3rem 0.5rem !important;
+    margin: 0 auto !important;
+    border: none !important;
+    background: transparent !important;
+    width: auto !important;
+  }
+
+  .os-table-cell {
+    text-align: center !important;
+    vertical-align: middle !important;
+    padding: 0.35rem 0.75rem !important;
+    border: none !important;
+    background: transparent !important;
+  }
+
+  .os-table-cell h2 a {
     text-decoration: underline !important;
     text-decoration-color: rgb(139, 92, 246) !important;
     text-decoration-thickness: 2px !important;
@@ -59,16 +81,16 @@
     transition: all 0.2s ease;
   }
 
-  :is(.dark) .project-item h2 a {
+  :is(.dark) .os-table-cell h2 a {
     text-decoration-color: rgb(167, 139, 250) !important;
   }
 
-  .project-item h2 a:hover {
+  .os-table-cell h2 a:hover {
     color: rgb(124, 58, 237) !important;
     text-decoration-color: rgb(124, 58, 237) !important;
   }
 
-  :is(.dark) .project-item h2 a:hover {
+  :is(.dark) .os-table-cell h2 a:hover {
     color: rgb(196, 181, 253) !important;
     text-decoration-color: rgb(196, 181, 253) !important;
   }
@@ -87,11 +109,21 @@
     color: #ffffff !important;
     text-decoration: none !important;
   }
-</style>
 
-<div class="text-base text-neutral-600 dark:text-neutral-400" style="margin-top: 1.75rem !important;">
-  Explore all my open source activity on
-  <a class="github-link" href="https://github.com/Shaivarth" target="_blank" rel="noreferrer">GitHub</a> &rarr;
-</div>
-{{ end }}
+  @media (max-width: 640px) {
+    .os-invisible-table,
+    .os-invisible-table tbody,
+    .os-invisible-table tr,
+    .os-table-cell {
+      display: block !important;
+      border-spacing: 0 !important;
+      margin: 0 auto !important;
+      text-align: center !important;
+    }
+
+    .os-table-cell {
+      padding: 0.5rem 0 !important;
+    }
+  }
+</style>
 {{ end }}
