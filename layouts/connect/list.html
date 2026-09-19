@@ -14,89 +14,84 @@
     </div>
     {{ end }}
 
-    <ul class="connect-list list-none p-0 m-0">
-      <li class="connect-item flex items-center justify-center text-lg">
-        <span class="connect-icon text-neutral-600 dark:text-neutral-400 flex items-center justify-center flex-shrink-0">
-          {{ partial "icon.html" "email" }}
-        </span>
-        <a href="mailto:sarthakatwork08@gmail.com" class="connect-link">sarthakatwork08@gmail.com</a>
-      </li>
+    <!-- Line 1: Social & Contact Icons in one line -->
+    <div
+      class="connect-icons flex flex-wrap items-center justify-center gap-3 sm:gap-5 text-2xl sm:text-3xl text-neutral-600 dark:text-neutral-400">
+      <a href="mailto:sarthakatwork08@gmail.com"
+        class="connect-icon-link px-1 transition-transform hover:scale-125 hover:text-primary-600 dark:hover:text-primary-400"
+        style="will-change: transform;" aria-label="Email" title="Email" rel="me noopener noreferrer">
+        {{ partial "icon.html" "email" }}
+      </a>
 
-      <li class="connect-item flex items-center justify-center text-lg">
-        <span class="connect-icon text-neutral-600 dark:text-neutral-400 flex items-center justify-center flex-shrink-0">
-          {{ partial "icon.html" "github" }}
-        </span>
-        <a href="https://github.com/Shaivarth" target="_blank" rel="noopener noreferrer"
-          class="connect-link">github.com/Shaivarth</a>
-      </li>
+      <a href="https://github.com/Shaivarth" target="_blank"
+        class="connect-icon-link px-1 transition-transform hover:scale-125 hover:text-primary-600 dark:hover:text-primary-400"
+        style="will-change: transform;" aria-label="GitHub" title="GitHub" rel="me noopener noreferrer">
+        {{ partial "icon.html" "github" }}
+      </a>
 
-      <li class="connect-item flex items-center justify-center text-lg">
-        <span class="connect-icon text-neutral-600 dark:text-neutral-400 flex items-center justify-center flex-shrink-0">
-          {{ partial "icon.html" "linkedin" }}
-        </span>
-        <a href="https://www.linkedin.com/in/shaivarth/" target="_blank" rel="noopener noreferrer"
-          class="connect-link">linkedin.com/in/shaivarth</a>
-      </li>
+      <a href="https://www.linkedin.com/in/shaivarth/" target="_blank"
+        class="connect-icon-link px-1 transition-transform hover:scale-125 hover:text-primary-600 dark:hover:text-primary-400"
+        style="will-change: transform;" aria-label="LinkedIn" title="LinkedIn" rel="me noopener noreferrer">
+        {{ partial "icon.html" "linkedin" }}
+      </a>
 
-      <li class="connect-item flex items-center justify-center text-lg">
-        <span class="connect-icon text-neutral-600 dark:text-neutral-400 flex items-center justify-center flex-shrink-0">
-          {{ partial "icon.html" "x-twitter" }}
-        </span>
-        <a href="https://x.com/shaivarth" target="_blank" rel="noopener noreferrer"
-          class="connect-link">x.com/shaivarth</a>
-      </li>
+      <a href="https://x.com/shaivarth" target="_blank"
+        class="connect-icon-link px-1 transition-transform hover:scale-125 hover:text-primary-600 dark:hover:text-primary-400"
+        style="will-change: transform;" aria-label="X (Twitter)" title="X (Twitter)" rel="me noopener noreferrer">
+        {{ partial "icon.html" "x-twitter" }}
+      </a>
 
-      <li class="connect-item flex items-center justify-center text-lg">
-        <span class="connect-icon text-neutral-600 dark:text-neutral-400 flex items-center justify-center flex-shrink-0">
-          {{ partial "icon.html" "tryhackme" }}
-        </span>
-        <a href="https://tryhackme.com/p/sarthakmishra" target="_blank" rel="noopener noreferrer"
-          class="connect-link">tryhackme.com/p/sarthakmishra</a>
-      </li>
+      <a href="https://tryhackme.com/p/sarthakmishra" target="_blank"
+        class="connect-icon-link px-1 transition-transform hover:scale-125 hover:text-primary-600 dark:hover:text-primary-400"
+        style="will-change: transform;" aria-label="TryHackMe" title="TryHackMe" rel="me noopener noreferrer">
+        {{ partial "icon.html" "tryhackme" }}
+      </a>
 
-      <li class="connect-item flex items-center justify-center text-lg">
-        <span class="connect-icon text-neutral-600 dark:text-neutral-400 flex items-center justify-center flex-shrink-0">
-          {{ partial "icon.html" "globe" }}
-        </span>
-        <a href="https://blog.shaivarth.com/" target="_blank" rel="noopener noreferrer"
-          class="connect-link">blog.shaivarth.com</a>
-      </li>
+      <a href="https://blog.shaivarth.com/" target="_blank"
+        class="connect-icon-link px-1 transition-transform hover:scale-125 hover:text-primary-600 dark:hover:text-primary-400"
+        style="will-change: transform;" aria-label="Blog" title="Blog" rel="me noopener noreferrer">
+        {{ partial "icon.html" "globe" }}
+      </a>
 
-      <li class="connect-item flex items-center justify-center text-lg">
-        <span class="connect-icon text-neutral-600 dark:text-neutral-400 flex items-center justify-center flex-shrink-0">
-          {{ partial "icon.html" "gitlab" }}
-        </span>
-        <a href="https://gitlab.com/sarthakmishra" target="_blank" rel="noopener noreferrer"
-          class="connect-link">gitlab.com/sarthakmishra</a>
-      </li>
+      <a href="https://gitlab.com/sarthakmishra" target="_blank"
+        class="connect-icon-link px-1 transition-transform hover:scale-125 hover:text-primary-600 dark:hover:text-primary-400"
+        style="will-change: transform;" aria-label="GitLab" title="GitLab" rel="me noopener noreferrer">
+        {{ partial "icon.html" "gitlab" }}
+      </a>
+    </div>
 
-      <li class="connect-item flex items-center justify-center text-lg">
-        <span class="connect-icon text-neutral-600 dark:text-neutral-400 flex items-center justify-center flex-shrink-0">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="16" y1="13" x2="8" y2="13"></line>
-            <line x1="16" y1="17" x2="8" y2="17"></line>
-            <polyline points="10 9 9 9 8 9"></polyline>
-          </svg>
-        </span>
-        <span>
-          Resume: (<a href="/resume.pdf" target="_blank" rel="noopener noreferrer" class="connect-link">view</a> / <a
-            href="/resume.pdf" download="SarthakMishra_Resume.pdf" class="connect-link">download</a>)
-        </span>
-      </li>
-    </ul>
+    <!-- Line 2: Resume in second line -->
+    <div class="connect-resume mt-8 flex items-center justify-center text-lg text-neutral-700 dark:text-neutral-300">
+      <span class="connect-resume-icon mr-2 flex items-center justify-center text-neutral-600 dark:text-neutral-400">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 inline-block">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+      </span>
+      <span>
+        Resume/CV: [ <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" class="connect-link">view</a> / <a
+          href="/resume.pdf" download="SarthakMishra_Resume.pdf" class="connect-link">download</a> ]
+      </span>
+    </div>
   </section>
 </div>
 
 <style>
   .connect-wrapper {
     width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     text-align: center;
+    min-height: calc(100vh - 240px);
+    padding: 1.5rem 0;
   }
 
   .connect-intro {
@@ -109,35 +104,25 @@
     line-height: 1.75rem;
   }
 
-  .connect-list {
+  .connect-icons {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 1.15rem;
-    width: 100%;
+    justify-content: center;
     margin-left: auto;
     margin-right: auto;
-    list-style: none !important;
-    padding-left: 0 !important;
   }
 
-  .connect-item {
+  .connect-icon-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .connect-resume {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-  }
-
-  .connect-icon {
-    width: 24px;
-    height: 24px;
-    margin-right: 12px;
-  }
-
-  .connect-icon svg {
-    width: 22px;
-    height: 22px;
-    display: inline-block;
   }
 
   .connect-link {

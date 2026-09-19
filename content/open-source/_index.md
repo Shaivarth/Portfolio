@@ -3,4 +3,4 @@ title: "open source contributions"
 description: "Things I'm contributing to in open source."
 ---
 
-Open source projects and tools I'm contributing to.
+Open source projects I'm contributing to.

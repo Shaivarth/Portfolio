@@ -11,4 +11,4 @@ It inspects suspicious files of any format without executing them, analyzing fil
 
 **Stack:** Python · FastAPI · Static Analysis · Security
 
-[View the repository](https://github.com/Shaivarth/hexora)
+[View the repository](https://github.com/Shaivarth/hexora) · [LIVE](https://hexora.shaivarth.com)

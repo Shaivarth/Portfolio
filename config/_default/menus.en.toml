@@ -20,6 +20,15 @@ url = "/connect/"
 weight = 40
 
 [[main]]
+name = "GitHub"
+url = "https://github.com/shaivarth"
+weight = 50
+[main.params]
+icon = "github"
+showName = false
+target = "_blank"
+
+[[main]]
 identifier = "appearance"
 weight = 99
 [main.params]
