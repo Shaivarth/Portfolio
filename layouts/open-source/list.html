@@ -14,26 +14,25 @@
   </section>
 
   {{ if .Data.Pages }}
-  <div class="os-table-container">
-    <table class="os-invisible-table" role="presentation">
-      <tbody>
-        <tr>
-          {{ range .Pages.ByWeight }}
-          <td class="os-table-cell">
-            <h2 class="mt-0 mb-0 text-xl font-bold leading-snug text-neutral-900 dark:text-neutral">
-              <a class="text-neutral-800 dark:text-neutral transition-colors"
-                href="{{ .Permalink }}">
-                {{ .Title }}
-              </a>
-            </h2>
-          </td>
-          {{ end }}
-        </tr>
-      </tbody>
-    </table>
+  <div class="os-cards-container">
+    {{ range .Pages.ByWeight }}
+    <div class="os-card">
+      <h2 class="mt-0 mb-0 text-xl font-bold leading-snug text-neutral-900 dark:text-neutral">
+        <a class="text-neutral-800 dark:text-neutral transition-colors"
+          href="{{ .Permalink }}">
+          {{ .Title }}
+        </a>
+      </h2>
+      {{ with .Params.description }}
+      <p class="os-repo-desc mt-2 mb-0 text-sm text-neutral-500 dark:text-neutral-400">
+        {{ . }}
+      </p>
+      {{ end }}
+    </div>
+    {{ end }}
   </div>
 
-  <div class="text-base text-neutral-600 dark:text-neutral-400 text-center" style="margin-top: 2rem !important;">
+  <div class="text-base text-neutral-600 dark:text-neutral-400 text-center" style="margin-top: 2.5rem !important;">
     Explore all my open source activity on
     <a class="github-link" href="https://github.com/Shaivarth" target="_blank" rel="noreferrer">GitHub</a> &rarr;
   </div>
@@ -49,31 +48,32 @@
     text-align: center;
   }
 
-  .os-table-container {
-    width: 100%;
+  .os-cards-container {
     display: flex;
+    flex-direction: row;
     justify-content: center;
-    margin-top: 1.75rem;
+    align-items: flex-start;
+    gap: 3.5rem;
+    margin-top: 2rem;
+    width: 100%;
+    max-width: 900px;
+    padding: 0 1rem;
   }
 
-  .os-invisible-table {
-    border-collapse: separate !important;
-    border-spacing: 3rem 0.5rem !important;
-    margin: 0 auto !important;
-    border: none !important;
-    background: transparent !important;
-    width: auto !important;
+  .os-card {
+    flex: 1 1 0;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
 
-  .os-table-cell {
-    text-align: center !important;
-    vertical-align: middle !important;
-    padding: 0.35rem 0.75rem !important;
-    border: none !important;
-    background: transparent !important;
+  .os-card h2 {
+    white-space: nowrap;
   }
 
-  .os-table-cell h2 a {
+  .os-card h2 a {
     text-decoration: underline !important;
     text-decoration-color: rgb(139, 92, 246) !important;
     text-decoration-thickness: 2px !important;
@@ -81,18 +81,28 @@
     transition: all 0.2s ease;
   }
 
-  :is(.dark) .os-table-cell h2 a {
+  :is(.dark) .os-card h2 a {
     text-decoration-color: rgb(167, 139, 250) !important;
   }
 
-  .os-table-cell h2 a:hover {
+  .os-card h2 a:hover {
     color: rgb(124, 58, 237) !important;
     text-decoration-color: rgb(124, 58, 237) !important;
   }
 
-  :is(.dark) .os-table-cell h2 a:hover {
+  :is(.dark) .os-card h2 a:hover {
     color: rgb(196, 181, 253) !important;
     text-decoration-color: rgb(196, 181, 253) !important;
+  }
+
+  .os-repo-desc {
+    margin-top: 0.5rem !important;
+    margin-bottom: 0 !important;
+    font-size: 0.925rem;
+    line-height: 1.45;
+    max-width: 290px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .github-link {
@@ -110,20 +120,22 @@
     text-decoration: none !important;
   }
 
-  @media (max-width: 640px) {
-    .os-invisible-table,
-    .os-invisible-table tbody,
-    .os-invisible-table tr,
-    .os-table-cell {
-      display: block !important;
-      border-spacing: 0 !important;
-      margin: 0 auto !important;
-      text-align: center !important;
+  @media (max-width: 768px) {
+    .os-cards-container {
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      margin-top: 1.5rem;
     }
 
-    .os-table-cell {
-      padding: 0.5rem 0 !important;
+    .os-card {
+      max-width: 100%;
+    }
+
+    .os-card h2 {
+      white-space: normal;
     }
   }
 </style>
 {{ end }}
+

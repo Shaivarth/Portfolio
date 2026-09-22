@@ -82,18 +82,6 @@ article section picture img {
   color: rgb(167 139 250) !important;
 }
 
-/* Heading links inherit heading color (white bold in dark mode) */
-.prose :where(h1, h2, h3, h4, h5, h6) a {
-  color: inherit !important;
-  font-weight: inherit !important;
-  text-decoration: none !important;
-}
-
-.prose :where(h1, h2, h3, h4, h5, h6) a:hover {
-  color: rgb(167 139 250) !important;
-  text-decoration: underline !important;
-}
-
 /* Use theme purple instead of pink for prose links */
 .prose a {
   color: rgb(124 58 237) !important;
@@ -108,6 +96,42 @@ article section picture img {
 .dark .prose a:hover {
   color: rgb(196 181 253) !important;
 }
+
+/* Heading links override general prose links: pure white text in dark mode with theme purple underline */
+.prose h1 a,
+.prose h2 a,
+.prose h3 a,
+.prose h4 a,
+.prose h5 a,
+.prose h6 a {
+  color: #171717 !important;
+  font-weight: inherit !important;
+  text-decoration: underline !important;
+  text-decoration-color: rgb(139 92 246) !important;
+  text-underline-offset: 4px !important;
+  text-decoration-thickness: 1.5px !important;
+}
+
+.dark .prose h1 a,
+.dark .prose h2 a,
+.dark .prose h3 a,
+.dark .prose h4 a,
+.dark .prose h5 a,
+.dark .prose h6 a {
+  color: #ffffff !important;
+  text-decoration-color: rgb(167 139 250) !important;
+}
+
+.dark .prose h1 a:hover,
+.dark .prose h2 a:hover,
+.dark .prose h3 a:hover,
+.dark .prose h4 a:hover,
+.dark .prose h5 a:hover,
+.dark .prose h6 a:hover {
+  color: #ffffff !important;
+  text-decoration-color: rgb(196 181 253) !important;
+}
+
 
 /* Clean pure white bold text in dark mode */
 .dark .prose strong,
@@ -152,3 +176,52 @@ a[aria-label="Anchor"],
 :is(h1, h2, h3, h4, h5, h6) .group-hover\:opacity-100 {
   display: none !important;
 }
+
+/* Open source PR description card */
+.pr-description {
+  background-color: #f4f4f5;
+  border: 1px solid #e4e4e7;
+  border-radius: 0.6rem;
+  padding: 1.15rem 1.35rem;
+  margin-top: 0.75rem !important;
+  margin-bottom: 2rem !important;
+  color: #374151;
+}
+
+:is(.dark) .pr-description {
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #d1d5db;
+}
+
+.pr-description > :first-child {
+  margin-top: 0 !important;
+}
+
+.pr-description > :last-child {
+  margin-bottom: 0 !important;
+}
+
+.pr-description p {
+  line-height: 1.65;
+  margin-top: 0 !important;
+  margin-bottom: 0.85rem !important;
+}
+
+.pr-description p:last-child {
+  margin-bottom: 0 !important;
+}
+
+.pr-description ul {
+  margin-top: 0.5rem !important;
+  margin-bottom: 0 !important;
+}
+
+.pr-description li {
+  margin-top: 0.35rem !important;
+  margin-bottom: 0.35rem !important;
+  line-height: 1.6;
+}
+
+
+
