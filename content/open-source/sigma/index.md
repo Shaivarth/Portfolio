@@ -1,10 +1,20 @@
 ---
 title: "SigmaHQ / sigma"
 description: "The industry standard signature format for SIEM detection engineering."
-weight: 10
+weight: 20
 ---
 
 Upstream contributions to [SigmaHQ/sigma](https://github.com/SigmaHQ/sigma), the industry standard generic signature format for SIEM detection engineering.
+
+### [#6263: Office Autorun Keys Modification Rule Fixes](https://github.com/SigmaHQ/sigma/pull/6263)
+
+<div class="pr-description">
+
+Fixed filter matching bugs in registry_set_asep_reg_keys_modification_office.yml under filter_main_known_addins:
+* Removed an accidental trailing space in 'C:\Windows\SysWOW64\regsvr32.exe ' that caused Image|startswith to fail when matching 32-bit regsvr32.exe execution.
+* Corrected an unintended double backslash in \Outlook\Addins\OneNote.OutlookAddin so TargetObject|contains accurately matches the registry key path, preventing false positive alerts on legitimate Office add-ins.
+
+</div>
 
 ### [#6239: CI Runtime Optimization & Test Suite Caching](https://github.com/SigmaHQ/sigma/pull/6239)
 
@@ -20,17 +30,8 @@ PR #6239 cut Sigma's test runtime by **5.4×**, saving around **75 sec** on each
 
 </div>
 
-### [#6263: Office Autorun Keys Modification Rule Fixes](https://github.com/SigmaHQ/sigma/pull/6263)
-
-<div class="pr-description">
-
-Fixed filter matching bugs in registry_set_asep_reg_keys_modification_office.yml under filter_main_known_addins:
-* Removed an accidental trailing space in 'C:\Windows\SysWOW64\regsvr32.exe ' that caused Image|startswith to fail when matching 32-bit regsvr32.exe execution.
-* Corrected an unintended double backslash in \Outlook\Addins\OneNote.OutlookAddin so TargetObject|contains accurately matches the registry key path, preventing false positive alerts on legitimate Office add-ins.
-
-</div>
-
 ---
 
 [View all PRs](https://github.com/SigmaHQ/sigma/pulls?q=is%3Apr+author%3AShaivarth) · [Sigma](https://github.com/SigmaHQ/sigma)
+
 
