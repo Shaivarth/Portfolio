@@ -1,0 +1,374 @@
+{{ define "main" }}
+  {{- $images := .Resources.ByType "image" }}
+  {{- $cover := $images.GetMatch (.Params.cover | default "*cover*") }}
+  {{- $feature := $images.GetMatch (.Params.feature | default "*feature*") | default $cover }}
+  <article class="max-w-prose mx-auto">
+    <header class="max-w-prose">
+      {{ if .Params.showBreadcrumbs | default (.Site.Params.article.showBreadcrumbs | default false) }}
+        {{ partial "breadcrumbs.html" . }}
+      {{ end }}
+      <div class="os-repo-header">
+        {{ if .Params.logo }}
+        <div class="os-repo-header-logo">
+          <img src="{{ .Params.logo | relURL }}" alt="{{ .Title }} logo" class="os-repo-header-img" loading="eager" />
+        </div>
+        {{ end }}
+        <h1 class="my-0 text-3xl sm:text-4xl font-bold tracking-normal text-neutral-900 dark:text-neutral">
+          {{ .Title | emojify }}
+        </h1>
+      </div>
+      {{ if or
+        (.Params.showDate | default (.Site.Params.article.showDate | default false))
+        (and (.Params.showDateUpdated | default (.Site.Params.article.showDateUpdated | default false)) (ne (partial "functions/date.html" .Date) (partial "functions/date.html" .Lastmod)))
+        (and (.Params.showWordCount | default (.Site.Params.article.showWordCount | default false)) (ne .WordCount 0))
+        (and (.Params.showReadingTime | default (.Site.Params.article.showReadingTime | default false)) (ne .ReadingTime 0))
+        (.Params.showEdit | default (.Site.Params.article.showEdit | default false))
+        (.Params.showTaxonomies | default (.Site.Params.article.showTaxonomies | default false))
+      }}
+        <div class="mb-10 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+          {{ partial "article-meta.html" (dict "context" . "scope" "single") }}
+        </div>
+      {{ end }}
+      {{ with $feature }}
+        <div class="prose">
+          {{ $altText := $.Params.featureAlt | default $.Params.coverAlt | default "" }}
+          {{ $class := "mb-6 rounded-md" }}
+          {{ $webp := $.Page.Site.Params.enableImageWebp | default true }}
+          {{ partial "picture.html" (dict "img" . "alt" $altText "class" $class "lazy" false "webp" $webp) }}
+          {{ with $.Params.coverCaption }}
+            <figcaption class="-mt-3 mb-6 text-center">{{ . | markdownify }}</figcaption>
+          {{ end }}
+        </div>
+      {{ end }}
+    </header>
+    <section class="prose mt-0 flex max-w-full flex-col dark:prose-invert lg:flex-row">
+      {{ if and (.Params.showTableOfContents | default (.Site.Params.article.showTableOfContents | default false)) (in .TableOfContents "<ul") }}
+        <div class="order-first px-0 lg:order-last lg:max-w-xs lg:ps-8">
+          <div class="toc pe-5 lg:sticky lg:top-10 print:hidden">
+            {{ partial "toc.html" . }}
+          </div>
+        </div>
+      {{ end }}
+      <div class="min-h-0 min-w-0 max-w-prose grow">
+        {{ .Content | emojify }}
+      </div>
+    </section>
+    <footer class="max-w-prose pt-8 print:hidden">
+      {{ partial "author.html" . }}
+      {{ partial "sharing-links.html" . }}
+      {{ partial "article-pagination.html" . }}
+      {{ if .Params.showComments | default (.Site.Params.article.showComments | default false) }}
+        {{ if templates.Exists "_partials/comments.html" }}
+          <div class="pt-3">
+            <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+            <div class="pt-3">
+              {{ partial "comments.html" . }}
+            </div>
+          </div>
+        {{ else }}
+          {{ warnf "[CONGO] Comments are enabled for %s but no comments partial exists." .File.Path }}
+        {{ end }}
+      {{ end }}
+    </footer>
+  </article>
+
+  <style>
+
+    .os-repo-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 1.15rem;
+      margin-top: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .os-repo-header-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #ffffff;
+      border: 2px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      flex-shrink: 0;
+    }
+
+    :is(.dark) .os-repo-header-logo {
+      background-color: #18181b;
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35);
+    }
+
+    .os-repo-header-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    @media (max-width: 640px) {
+      .os-repo-header {
+        gap: 0.85rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .os-repo-header-logo {
+        width: 44px;
+        height: 44px;
+      }
+    }
+
+    /* PR Accordion items: hidden by default, toggled on click */
+    .pr-item {
+      margin-bottom: 0.85rem;
+      position: relative;
+    }
+
+    .pr-header-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0.45rem 0.6rem;
+      margin-left: -0.6rem;
+      margin-right: -0.6rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.2s ease;
+    }
+
+    .pr-header-row:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+
+    :is(.dark) .pr-header-row:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .pr-header-title-wrap {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.55rem;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .pr-chevron {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      color: #71717a;
+    }
+
+    :is(.dark) .pr-chevron {
+      color: #a1a1aa;
+    }
+
+    .pr-item.is-open .pr-chevron {
+      transform: rotate(90deg);
+      color: #18181b;
+    }
+
+    :is(.dark) .pr-item.is-open .pr-chevron {
+      color: #f4f4f5;
+    }
+
+    .pr-header-row h3 {
+      margin: 0 !important;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .pr-title-text {
+      color: #27272a;
+      transition: color 0.2s ease;
+      white-space: nowrap;
+    }
+
+    :is(.dark) .pr-title-text {
+      color: #e4e4e7;
+    }
+
+    .pr-header-row:hover .pr-title-text {
+      color: #09090b;
+    }
+
+    :is(.dark) .pr-header-row:hover .pr-title-text {
+      color: #ffffff;
+    }
+
+    .pr-redirect-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 0.375rem;
+      background-color: rgba(0, 0, 0, 0.05);
+      color: #71717a !important;
+      text-decoration: none !important;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    :is(.dark) .pr-redirect-btn {
+      background-color: rgba(255, 255, 255, 0.07);
+      color: #a1a1aa !important;
+    }
+
+    .pr-redirect-btn:hover {
+      background-color: rgba(139, 92, 246, 0.15) !important;
+      color: #7c3aed !important;
+      transform: translateY(-1px);
+    }
+
+    :is(.dark) .pr-redirect-btn:hover {
+      background-color: rgba(167, 139, 250, 0.2) !important;
+      color: #c4b5fd !important;
+    }
+
+    .pr-description {
+      display: none;
+      margin-top: 0.75rem !important;
+      margin-bottom: 1.25rem !important;
+    }
+
+    .pr-item.is-open .pr-description {
+      display: block;
+      animation: prExpand 0.22s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @keyframes prExpand {
+      from {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .pr-header-row {
+        margin-left: -0.35rem;
+        margin-right: -0.35rem;
+        padding: 0.5rem 0.4rem;
+        gap: 0.5rem;
+      }
+
+      .pr-header-row h3 {
+        font-size: 0.95rem;
+        white-space: normal;
+      }
+
+      .pr-title-text {
+        white-space: normal;
+        word-break: break-word;
+      }
+
+      .pr-redirect-btn {
+        width: 26px;
+        height: 26px;
+      }
+    }
+  </style>
+
+  <script>
+    (function() {
+      function setupPRCollapsibles() {
+        const headings = document.querySelectorAll('.prose h3');
+        headings.forEach(function(h3) {
+          if (h3.closest('.pr-item')) return;
+          let next = h3.nextElementSibling;
+          if (next && next.classList.contains('pr-description')) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'pr-item';
+            h3.parentNode.insertBefore(wrapper, h3);
+
+            const headerRow = document.createElement('div');
+            headerRow.className = 'pr-header-row';
+            headerRow.setAttribute('role', 'button');
+            headerRow.setAttribute('tabindex', '0');
+            headerRow.setAttribute('aria-expanded', 'false');
+
+            const titleWrap = document.createElement('div');
+            titleWrap.className = 'pr-header-title-wrap';
+
+            const chevron = document.createElement('span');
+            chevron.className = 'pr-chevron';
+            chevron.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" style="width: 16px; height: 16px;"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" /></svg>';
+            titleWrap.appendChild(chevron);
+
+            const link = h3.querySelector('a');
+            const prUrl = link ? link.href : '';
+            const prTitle = link ? link.textContent : h3.textContent;
+
+            const titleText = document.createElement('span');
+            titleText.className = 'pr-title-text';
+            titleText.textContent = prTitle;
+            h3.innerHTML = '';
+            h3.appendChild(titleText);
+            titleWrap.appendChild(h3);
+
+            headerRow.appendChild(titleWrap);
+
+            if (prUrl) {
+              const ghBadge = document.createElement('a');
+              ghBadge.className = 'pr-redirect-btn';
+              ghBadge.href = prUrl;
+              ghBadge.target = '_blank';
+              ghBadge.rel = 'noreferrer noopener';
+              ghBadge.title = 'View PR on GitHub';
+              ghBadge.setAttribute('aria-label', 'View PR on GitHub');
+              ghBadge.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" style="width: 15px; height: 15px; display: inline-block;"><path fill-rule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h4a.75.75 0 010 1.5h-4z" clip-rule="evenodd" /><path fill-rule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" clip-rule="evenodd" /></svg>';
+
+              ghBadge.addEventListener('click', function(e) {
+                e.stopPropagation();
+              });
+              headerRow.appendChild(ghBadge);
+            }
+
+            function toggle() {
+              const isOpen = wrapper.classList.toggle('is-open');
+              headerRow.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            }
+
+            headerRow.addEventListener('click', toggle);
+            headerRow.addEventListener('keydown', function(e) {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggle();
+              }
+            });
+
+            wrapper.appendChild(headerRow);
+            wrapper.appendChild(next);
+          }
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupPRCollapsibles);
+      } else {
+        setupPRCollapsibles();
+      }
+    })();
+  </script>
+{{ end }}

@@ -2,6 +2,7 @@
 title: "SigmaHQ / sigma"
 description: "The industry standard signature format for SIEM detection engineering."
 weight: 20
+logo: "img/sigma.png"
 ---
 
 Upstream contributions to [SigmaHQ/sigma](https://github.com/SigmaHQ/sigma), the industry standard generic signature format for SIEM detection engineering.

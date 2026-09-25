@@ -2,6 +2,7 @@
 title: "ProjectDiscovery / nuclei-templates"
 description: "Community-curated vulnerability scanning templates for Nuclei."
 weight: 10
+logo: "img/projectdiscovery.png"
 ---
 
 Contributions to [ProjectDiscovery/nuclei-templates](https://github.com/projectdiscovery/nuclei-templates), the community-curated vulnerability scanning template library for the Nuclei engine.

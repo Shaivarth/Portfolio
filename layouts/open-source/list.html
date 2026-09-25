@@ -6,7 +6,7 @@
     {{ end }}
     <h1 class="mt-0 text-4xl font-bold tracking-normal text-neutral-900 dark:text-neutral text-center">{{ .Title }}</h1>
   </header>
-  
+
   <section class="mt-0 prose flex max-w-full flex-col dark:prose-invert text-center mx-auto">
     <div class="min-h-0 min-w-0 max-w-prose mx-auto text-neutral-600 dark:text-neutral-400 text-center">
       {{ .Content | emojify }}
@@ -17,22 +17,30 @@
   <div class="os-cards-container">
     {{ range .Pages.ByWeight }}
     <div class="os-card">
-      <h2 class="mt-0 mb-0 text-xl font-bold leading-snug text-neutral-900 dark:text-neutral">
-        <a class="text-neutral-800 dark:text-neutral transition-colors"
-          href="{{ .Permalink }}">
-          {{ .Title }}
-        </a>
-      </h2>
-      {{ with .Params.description }}
-      <p class="os-repo-desc mt-2 mb-0 text-sm text-neutral-500 dark:text-neutral-400">
-        {{ . }}
-      </p>
+      {{ if .Params.logo }}
+      <a href="{{ .Permalink }}" class="os-logo-link" aria-label="{{ .Title }}">
+        <div class="os-logo-wrapper">
+          <img src="{{ .Params.logo | relURL }}" alt="{{ .Title }} logo" class="os-logo-img" loading="lazy" />
+        </div>
+      </a>
       {{ end }}
+      <div class="os-card-info">
+        <h2 class="mt-0 mb-0 text-xl font-bold leading-snug text-neutral-900 dark:text-neutral">
+          <a class="text-neutral-800 dark:text-neutral transition-colors" href="{{ .Permalink }}">
+            {{ .Title }}
+          </a>
+        </h2>
+        {{ with .Params.description }}
+        <p class="os-repo-desc mt-1 mb-0 text-sm text-neutral-500 dark:text-neutral-400">
+          {{ . }}
+        </p>
+        {{ end }}
+      </div>
     </div>
     {{ end }}
   </div>
 
-  <div class="text-base text-neutral-600 dark:text-neutral-400 text-center" style="margin-top: 2.5rem !important;">
+  <div class="text-base text-neutral-600 dark:text-neutral-400 text-center" style="margin-top: 2.75rem !important;">
     Explore all my open source activity on
     <a class="github-link" href="https://github.com/Shaivarth" target="_blank" rel="noreferrer">GitHub</a> &rarr;
   </div>
@@ -50,59 +58,127 @@
 
   .os-cards-container {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 3.5rem;
-    margin-top: 2rem;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 2.25rem;
     width: 100%;
-    max-width: 900px;
+    max-width: 620px;
     padding: 0 1rem;
+    box-sizing: border-box;
   }
 
   .os-card {
-    flex: 1 1 0;
-    max-width: 360px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    text-align: center;
+    text-align: left;
+    gap: 1.25rem;
+    width: 100%;
+    padding: 0.85rem 1.15rem;
+    border-radius: 0.75rem;
+    border: 1px solid transparent;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-sizing: border-box;
+  }
+
+  .os-card:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
+
+  :is(.dark) .os-card:hover {
+    background-color: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  .os-logo-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    flex-shrink: 0;
+    text-decoration: none !important;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .os-card:hover .os-logo-link {
+    transform: scale(1.05);
+  }
+
+  .os-logo-wrapper {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    border: 2px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  :is(.dark) .os-logo-wrapper {
+    background-color: #18181b;
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35);
+  }
+
+  .os-card:hover .os-logo-wrapper {
+    border-color: #9ca3af;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  }
+
+  :is(.dark) .os-card:hover .os-logo-wrapper {
+    border-color: #e4e4e7;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 0 10px rgba(255, 255, 255, 0.08);
+  }
+
+  .os-logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  .os-card-info {
+    flex: 1 1 auto;
+    min-width: 0;
   }
 
   .os-card h2 {
-    white-space: nowrap;
+    white-space: normal;
+    word-break: break-word;
   }
 
   .os-card h2 a {
-    text-decoration: underline !important;
-    text-decoration-color: rgb(139, 92, 246) !important;
-    text-decoration-thickness: 2px !important;
-    text-underline-offset: 4px !important;
-    transition: all 0.2s ease;
+    text-decoration: none !important;
+    transition: color 0.2s ease;
   }
 
-  :is(.dark) .os-card h2 a {
-    text-decoration-color: rgb(167, 139, 250) !important;
-  }
-
+  .os-card:hover h2 a,
   .os-card h2 a:hover {
-    color: rgb(124, 58, 237) !important;
-    text-decoration-color: rgb(124, 58, 237) !important;
+    color: #18181b !important;
+    text-decoration: none !important;
   }
 
+  :is(.dark) .os-card:hover h2 a,
   :is(.dark) .os-card h2 a:hover {
-    color: rgb(196, 181, 253) !important;
-    text-decoration-color: rgb(196, 181, 253) !important;
+    color: #f4f4f5 !important;
+    text-decoration: none !important;
   }
 
   .os-repo-desc {
-    margin-top: 0.5rem !important;
+    margin-top: 0.35rem !important;
     margin-bottom: 0 !important;
     font-size: 0.925rem;
     line-height: 1.45;
-    max-width: 290px;
-    margin-left: auto;
-    margin-right: auto;
   }
 
   .github-link {
@@ -120,22 +196,26 @@
     text-decoration: none !important;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 640px) {
     .os-cards-container {
-      flex-direction: column;
-      align-items: center;
-      gap: 2rem;
-      margin-top: 1.5rem;
+      gap: 1.25rem;
+      margin-top: 1.75rem;
+      padding: 0 0.5rem;
     }
 
     .os-card {
-      max-width: 100%;
+      padding: 0.75rem 0.85rem;
+      gap: 1rem;
+    }
+
+    .os-logo-wrapper {
+      width: 50px;
+      height: 50px;
     }
 
     .os-card h2 {
-      white-space: normal;
+      font-size: 1.125rem;
     }
   }
 </style>
 {{ end }}
-
