@@ -144,5 +144,82 @@
   :is(.dark) .connect-link:hover {
     color: rgb(var(--color-primary-300, 216, 180, 254));
   }
+
+  /* One-time automatic left-to-right hover wave (faster & snappier) */
+  .connect-icon-link.auto-hover-wave {
+    animation: iconWaveHover 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  :is(.dark) .connect-icon-link.auto-hover-wave {
+    animation: iconWaveHoverDark 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  @keyframes iconWaveHover {
+    0% {
+      transform: scale(1) translateY(0);
+      color: inherit;
+    }
+    45% {
+      transform: scale(1.26) translateY(-3px);
+      color: rgb(var(--color-primary-600, 124, 58, 237));
+    }
+    75% {
+      transform: scale(1.08) translateY(-1px);
+      color: rgb(var(--color-primary-600, 124, 58, 237));
+    }
+    100% {
+      transform: scale(1) translateY(0);
+      color: inherit;
+    }
+  }
+
+  @keyframes iconWaveHoverDark {
+    0% {
+      transform: scale(1) translateY(0);
+      color: inherit;
+    }
+    45% {
+      transform: scale(1.26) translateY(-3px);
+      color: rgb(var(--color-primary-400, 192, 132, 252));
+    }
+    75% {
+      transform: scale(1.08) translateY(-1px);
+      color: rgb(var(--color-primary-400, 192, 132, 252));
+    }
+    100% {
+      transform: scale(1) translateY(0);
+      color: inherit;
+    }
+  }
 </style>
+
+<script>
+  (function() {
+    function triggerIconWave() {
+      var icons = document.querySelectorAll('.connect-icons .connect-icon-link');
+      if (!icons || !icons.length) return;
+
+      var initialDelay = 220; // Settle quickly after page entrance
+      var stagger = 65;       // Fast, crisp ripple between each icon
+
+      icons.forEach(function(icon, index) {
+        setTimeout(function() {
+          icon.classList.add('auto-hover-wave');
+
+          var onEnd = function() {
+            icon.classList.remove('auto-hover-wave');
+            icon.removeEventListener('animationend', onEnd);
+          };
+          icon.addEventListener('animationend', onEnd);
+        }, initialDelay + (index * stagger));
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', triggerIconWave);
+    } else {
+      triggerIconWave();
+    }
+  })();
+</script>
 {{ end }}
