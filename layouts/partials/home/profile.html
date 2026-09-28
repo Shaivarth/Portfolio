@@ -36,7 +36,7 @@
         {{ . }}
       </h2>
     {{ end }}
-    <div class="mt-1 text-2xl">
+    <div class="mt-1 text-2xl home-social-icons">
       {{ partial "author-links.html" . }}
     </div>
   </section>
@@ -44,3 +44,128 @@
     {{ .Content }}
   </section>
 </article>
+
+<style>
+  .home-social-icons a {
+    display: inline-block;
+  }
+
+  /* One-time automatic left-to-right hover wave on home visit */
+  .home-social-icons a.auto-hover-wave {
+    animation: homeIconWaveHover 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  :is(.dark) .home-social-icons a.auto-hover-wave {
+    animation: homeIconWaveHoverDark 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  @keyframes homeIconWaveHover {
+    0% {
+      transform: scale(1) translateY(0);
+      color: inherit;
+    }
+    45% {
+      transform: scale(1.26) translateY(-3px);
+      color: rgb(var(--color-primary-600, 124, 58, 237));
+    }
+    75% {
+      transform: scale(1.08) translateY(-1px);
+      color: rgb(var(--color-primary-600, 124, 58, 237));
+    }
+    100% {
+      transform: scale(1) translateY(0);
+      color: inherit;
+    }
+  }
+
+  @keyframes homeIconWaveHoverDark {
+    0% {
+      transform: scale(1) translateY(0);
+      color: inherit;
+    }
+    45% {
+      transform: scale(1.26) translateY(-3px);
+      color: rgb(var(--color-primary-400, 192, 132, 252));
+    }
+    75% {
+      transform: scale(1.08) translateY(-1px);
+      color: rgb(var(--color-primary-400, 192, 132, 252));
+    }
+    100% {
+      transform: scale(1) translateY(0);
+      color: inherit;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    {{ $winkImage := resources.Get "img/coderagent-wink.png" }}
+    {{ $winkUrl := "" }}
+    {{ if $winkImage }}
+      {{ $winkUrl = $winkImage.RelPermalink }}
+    {{ else }}
+      {{ $winkUrl = "img/coderagent-wink.png" | relURL }}
+    {{ end }}
+
+    var winkSrc = '{{ $winkUrl }}';
+    var avatarImg = document.querySelector('.agent-avatar');
+    var originalSrc = avatarImg ? avatarImg.src : '';
+
+    // Preload wink frame immediately for instant, flicker-free switch
+    if (winkSrc) {
+      var preloader = new Image();
+      preloader.src = winkSrc;
+    }
+
+    function blinkMascot() {
+      if (!avatarImg || !winkSrc) return;
+      avatarImg.src = winkSrc;
+      setTimeout(function() {
+        avatarImg.src = originalSrc;
+      }, 190);
+    }
+
+    function triggerHomeIconWave() {
+      var icons = document.querySelectorAll('.home-social-icons a');
+      if (!icons || !icons.length) return;
+
+      var initialDelay = 220; // Settle quickly after landing
+      var stagger = 65;       // Fast, crisp ripple between each icon
+
+      icons.forEach(function(icon, index) {
+        setTimeout(function() {
+          icon.classList.add('auto-hover-wave');
+
+          var onEnd = function() {
+            icon.classList.remove('auto-hover-wave');
+            icon.removeEventListener('animationend', onEnd);
+          };
+          icon.addEventListener('animationend', onEnd);
+        }, initialDelay + (index * stagger));
+      });
+
+      // Trigger left blink right after the icon ripple effect completes
+      var iconWaveEndTime = initialDelay + (icons.length * stagger) + 260;
+      setTimeout(function() {
+        blinkMascot();
+      }, iconWaveEndTime);
+    }
+
+    // Interactive easter egg: mascot blinks when hovered
+    if (avatarImg) {
+      avatarImg.style.cursor = 'pointer';
+      avatarImg.addEventListener('mouseenter', function() {
+        blinkMascot();
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', triggerHomeIconWave);
+    } else {
+      triggerHomeIconWave();
+    }
+  })();
+</script>
+
+
