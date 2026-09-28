@@ -1,6 +1,7 @@
 <style>
   /* Prevent horizontal scrollbars and disable browser default swipe-to-navigate (back/forward) */
-  html, body {
+  html,
+  body {
     overflow-x: hidden;
     overscroll-behavior-x: none !important;
     overscroll-behavior: none !important;
@@ -27,11 +28,94 @@
   #main-content {
     will-change: transform, opacity;
   }
+
+  /* Side swipe indicators */
+  .swipe-side-indicator {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 40;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+    user-select: none;
+    pointer-events: auto;
+    color: rgb(var(--color-primary-600, 124, 58, 237));
+    opacity: 0.55;
+    transition: opacity 0.25s ease, color 0.25s ease, transform 0.2s ease;
+    padding: 0.4rem;
+  }
+
+  :is(.dark) .swipe-side-indicator {
+    color: rgb(var(--color-primary-400, 167, 139, 250));
+    opacity: 0.55;
+  }
+
+  .swipe-side-indicator:hover {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.08);
+  }
+
+  :is(.dark) .swipe-side-indicator:hover {
+    opacity: 1;
+  }
+
+  .swipe-side-left {
+    left: 1.1rem;
+  }
+
+  .swipe-side-right {
+    right: 1.1rem;
+  }
+
+  @media (max-width: 640px) {
+    .swipe-side-left {
+      left: 0.3rem;
+    }
+    .swipe-side-right {
+      right: 0.3rem;
+    }
+  }
+
+  .swipe-side-arrow {
+    font-size: 2.45rem;
+    font-weight: 300;
+    line-height: 1;
+    display: block;
+  }
+
+  .swipe-side-text {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    display: none;
+  }
+
+  .swipe-side-indicator:hover .swipe-side-arrow {
+    display: none;
+  }
+
+  .swipe-side-indicator:hover .swipe-side-text {
+    display: block;
+  }
 </style>
+
+<div id="swipe-side-left" class="swipe-side-indicator swipe-side-left" aria-hidden="true" style="display: none;">
+  <span class="swipe-side-arrow">‹</span>
+  <span class="swipe-side-text">swipe</span>
+</div>
+
+<div id="swipe-side-right" class="swipe-side-indicator swipe-side-right" aria-hidden="true" style="display: none;">
+  <span class="swipe-side-arrow">›</span>
+  <span class="swipe-side-text">swipe</span>
+</div>
+
 
 <script>
   // Immediate setup in <head> to prepare incoming slide animation before initial paint
-  (function() {
+  (function () {
     try {
       var dir = sessionStorage.getItem('page_swipe_dir');
       if (dir === 'left') {
@@ -39,10 +123,10 @@
       } else if (dir === 'right') {
         document.documentElement.classList.add('page-swipe-from-left');
       }
-    } catch (e) {}
+    } catch (e) { }
   })();
 
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     var ROUTES = ['/', '/about/', '/projects/', '/open-source/', '/connect/'];
     var isNavigating = false;
     var swipeTriggered = false;
@@ -52,10 +136,10 @@
       var dir = sessionStorage.getItem('page_swipe_dir');
       if (dir) {
         sessionStorage.removeItem('page_swipe_dir');
-        requestAnimationFrame(function() {
-          requestAnimationFrame(function() {
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
             document.documentElement.classList.add('page-swipe-ready');
-            setTimeout(function() {
+            setTimeout(function () {
               document.documentElement.classList.remove('page-swipe-from-right', 'page-swipe-from-left', 'page-swipe-ready');
               var main = document.getElementById('main-content');
               if (main) {
@@ -67,10 +151,10 @@
           });
         });
       }
-    } catch (e) {}
+    } catch (e) { }
 
     // Clean up if restored from browser back/forward cache (bfcache)
-    window.addEventListener('pageshow', function(e) {
+    window.addEventListener('pageshow', function (e) {
       if (e.persisted) {
         document.documentElement.classList.remove('page-swipe-from-right', 'page-swipe-from-left', 'page-swipe-ready');
         var main = document.getElementById('main-content');
@@ -111,8 +195,29 @@
       }
     }
 
+    // Setup side swipe indicators (arrows that convert to 'swipe' on hover)
+    var leftIndicator = document.getElementById('swipe-side-left');
+    var rightIndicator = document.getElementById('swipe-side-right');
+
+    if (leftIndicator && prevRoute) {
+      leftIndicator.style.display = 'inline-flex';
+    }
+    if (rightIndicator && nextRoute) {
+      rightIndicator.style.display = 'inline-flex';
+    }
+
+    // Explicitly make sure indicators are not clickable
+    [leftIndicator, rightIndicator].forEach(function (el) {
+      if (el) {
+        el.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        });
+      }
+    });
+
     // Prefetch adjacent pages for zero-latency transitions
-    [prevRoute, nextRoute].forEach(function(url) {
+    [prevRoute, nextRoute].forEach(function (url) {
       if (url) {
         var link = document.createElement('link');
         link.rel = 'prefetch';
@@ -126,10 +231,10 @@
       if (!main) return;
       main.style.transition = 'transform 0.16s ease-out';
       main.style.transform = direction === 'right' ? 'translateX(20px)' : 'translateX(-20px)';
-      setTimeout(function() {
+      setTimeout(function () {
         main.style.transition = 'transform 0.26s cubic-bezier(0.2, 0, 0, 1)';
         main.style.transform = 'translateX(0)';
-        setTimeout(function() {
+        setTimeout(function () {
           main.style.transition = '';
           main.style.transform = '';
         }, 260);
@@ -143,14 +248,14 @@
 
       try {
         sessionStorage.setItem('page_swipe_dir', direction);
-      } catch (e) {}
+      } catch (e) { }
 
       var main = document.getElementById('main-content') || document.body;
       main.style.transition = 'transform 0.22s cubic-bezier(0.2, 0, 0, 1), opacity 0.22s ease';
       main.style.transform = direction === 'left' ? 'translateX(-50px)' : 'translateX(50px)';
       main.style.opacity = '0';
 
-      setTimeout(function() {
+      setTimeout(function () {
         window.location.href = targetUrl;
       }, 200);
     }
@@ -197,7 +302,7 @@
       var hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
       var isSmallScreen = window.innerWidth <= 1024;
       var mobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Tablet/i.test(navigator.userAgent) ||
-                     (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
       return hasTouch && (isSmallScreen || mobileUA);
     }
 
@@ -211,7 +316,7 @@
     var touchFingerCount = 0;
     var isScrolling = null;
 
-    window.addEventListener('touchstart', function(e) {
+    window.addEventListener('touchstart', function (e) {
       touchFingerCount = e.touches.length;
       var mobile = isMobileOrTablet();
 
@@ -229,7 +334,7 @@
       isScrolling = null;
     }, { passive: true });
 
-    window.addEventListener('touchmove', function(e) {
+    window.addEventListener('touchmove', function (e) {
       if (!touchStartTime) return;
       if (isScrolling === true) return;
 
@@ -250,7 +355,7 @@
       }
     }, { passive: false });
 
-    window.addEventListener('touchend', function(e) {
+    window.addEventListener('touchend', function (e) {
       if (!touchStartTime) return;
       var elapsed = Date.now() - touchStartTime;
       touchStartTime = 0;
@@ -285,7 +390,7 @@
     var wheelTimeout = null;
     var wheelLock = false;
 
-    window.addEventListener('wheel', function(e) {
+    window.addEventListener('wheel', function (e) {
       if (e.ctrlKey) return; // Ignore pinch-to-zoom
 
       var absX = Math.abs(e.deltaX);
@@ -306,7 +411,7 @@
         wheelAccumulatorX += e.deltaX;
 
         clearTimeout(wheelTimeout);
-        wheelTimeout = setTimeout(function() {
+        wheelTimeout = setTimeout(function () {
           wheelAccumulatorX = 0;
         }, 220);
 
@@ -316,13 +421,13 @@
           wheelLock = true;
           wheelAccumulatorX = 0;
           handleSwipe('left');
-          setTimeout(function() { wheelLock = false; }, 800);
+          setTimeout(function () { wheelLock = false; }, 800);
         } else if (wheelAccumulatorX < -TRACKPAD_THRESHOLD) {
           // Trackpad swiped two fingers right (pushing back) -> go Prev
           wheelLock = true;
           wheelAccumulatorX = 0;
           handleSwipe('right');
-          setTimeout(function() { wheelLock = false; }, 800);
+          setTimeout(function () { wheelLock = false; }, 800);
         }
       }
     }, { passive: false });
@@ -330,7 +435,7 @@
     /* ------------------------------------------------------------------
        4. Keyboard arrows (Left / Right) for desktop convenience
        ------------------------------------------------------------------ */
-    window.addEventListener('keydown', function(e) {
+    window.addEventListener('keydown', function (e) {
       var tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
       if (['input', 'textarea', 'select'].includes(tag) || (document.activeElement && document.activeElement.isContentEditable)) return;
       if (e.key === 'ArrowRight') {
@@ -341,11 +446,11 @@
     });
 
     // Suppress accidental link clicks after completing a swipe gesture
-    window.addEventListener('click', function(e) {
+    window.addEventListener('click', function (e) {
       if (swipeTriggered) {
         e.preventDefault();
         e.stopPropagation();
-        setTimeout(function() { swipeTriggered = false; }, 120);
+        setTimeout(function () { swipeTriggered = false; }, 120);
       }
     }, true);
   });
