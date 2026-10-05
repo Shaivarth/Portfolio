@@ -7,6 +7,18 @@ logo: "img/projectdiscovery.png"
 
 Contributions to [ProjectDiscovery/nuclei-templates](https://github.com/projectdiscovery/nuclei-templates), the community-curated vulnerability scanning template library for the Nuclei engine.
 
+### [#17355: fix(CVE-2025-12536): correct cve-id in classification](https://github.com/projectdiscovery/nuclei-templates/pull/17355)
+
+<div class="pr-description">
+
+Corrected the `cve-id` classification metadata in the detection template for **CVE-2025-12536** (SureForms &lt;= 1.13.1 Sensitive Information Exposure).
+
+The template contained a copy-paste mismatch where `classification.cve-id` was mistakenly set to `CVE-2025-14437` (which corresponds to Hummingbird Performance). This duplicate identifier collision prevented proper downstream EPSS score syncing and caused CLI filtering to associate the template with the incorrect vulnerability.
+
+Updated `cve-id` to the canonical identifier `CVE-2025-12536`, resolving the collision and ensuring accurate scoring and filtering across the repository.
+
+</div>
+
 ### [#17294: fix: prevent false positive in sap-readconfigfile-disclosure](https://github.com/projectdiscovery/nuclei-templates/pull/17294)
 
 <div class="pr-description">
