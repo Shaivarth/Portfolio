@@ -1,11 +1,10 @@
 {{ define "main" }}
 <div class="open-source-wrapper flex flex-col items-center text-center">
+  {{ if .Params.showBreadcrumbs | default (.Site.Params.list.showBreadcrumbs | default false) }}
   <header class="w-full text-center">
-    {{ if .Params.showBreadcrumbs | default (.Site.Params.list.showBreadcrumbs | default false) }}
     {{ partial "breadcrumbs.html" . }}
-    {{ end }}
-    <h1 class="mt-0 text-4xl font-bold tracking-normal text-neutral-900 dark:text-neutral text-center">{{ .Title }}</h1>
   </header>
+  {{ end }}
 
   <section class="mt-0 prose flex max-w-full flex-col dark:prose-invert text-center mx-auto">
     <div class="min-h-0 min-w-0 max-w-prose mx-auto text-neutral-600 dark:text-neutral-400 text-center">

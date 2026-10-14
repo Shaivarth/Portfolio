@@ -127,7 +127,7 @@
   })();
 
   document.addEventListener('DOMContentLoaded', function () {
-    var ROUTES = ['/', '/about/', '/projects/', '/open-source/', '/connect/'];
+    var ROUTES = ['/', '/about/', '/projects/', '/open-source/', '/tryhackme/', '/connect/'];
     var isNavigating = false;
     var swipeTriggered = false;
 
@@ -188,7 +188,7 @@
     } else {
       if (currentPath.startsWith('/open-source/')) {
         prevRoute = '/open-source/';
-        nextRoute = '/connect/';
+        nextRoute = '/tryhackme/';
       } else if (currentPath.startsWith('/projects/')) {
         prevRoute = '/projects/';
         nextRoute = '/open-source/';

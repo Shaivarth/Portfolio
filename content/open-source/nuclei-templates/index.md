@@ -7,6 +7,18 @@ logo: "img/projectdiscovery.png"
 
 Contributions to [ProjectDiscovery/nuclei-templates](https://github.com/projectdiscovery/nuclei-templates), the community-curated vulnerability scanning template library for the Nuclei engine.
 
+### [#17395: Fix Dell DPI default login detection](https://github.com/projectdiscovery/nuclei-templates/pull/17395)
+
+<div class="pr-description">
+
+Fixed a false-negative detection in the detection template for **dell-dpi-default-login** (Dell DPI Remote Power Management Default Login).
+
+The template failed to detect valid targets because uppercase strings in the title matcher were compared against lowercase-converted HTTP response bodies (`tolower(body_1)`). I corrected the matcher casing to lowercase and fixed the multi-request configuration by replacing unnecessary pitchfork payload overhead with direct variables and adding `req-condition: true` to properly evaluate status codes and body indicators across both requests.
+
+During review, the maintainer refined the implementation by transitioning the multi-request logic to Nuclei's newer `flow` protocol (`flow: http(1) && http(2)`).
+
+</div>
+
 ### [#17355: fix(CVE-2025-12536): correct cve-id in classification](https://github.com/projectdiscovery/nuclei-templates/pull/17355)
 
 <div class="pr-description">

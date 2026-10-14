@@ -1,0 +1,224 @@
+{{ define "main" }}
+<div class="tryhackme-wrapper flex flex-col items-center text-center">
+  {{ if .Params.showBreadcrumbs | default (.Site.Params.list.showBreadcrumbs | default false) }}
+    <header class="w-full text-center">
+      {{ partial "breadcrumbs.html" . }}
+    </header>
+  {{ end }}
+
+  <section class="w-full flex flex-col items-center text-center">
+    <!-- Main TryHackMe widget frame -->
+    <div class="tryhackme-badge-wrapper flex items-center justify-center">
+      {{ .Content }}
+    </div>
+
+    <!-- Slidable badges list directly below -->
+    {{ if .Params.badges }}
+    <div class="thm-badges-section mt-10 w-full flex flex-col items-center">
+      <div class="thm-badges-slider-wrapper w-full">
+        <div id="thm-badges-slider" class="thm-badges-slider flex flex-row items-center">
+          {{ range .Params.badges }}
+          <div class="thm-badge-card flex flex-col items-center justify-center flex-shrink-0" title="{{ .name }}">
+            <div class="thm-badge-icon-box">
+              <img src="{{ .image }}" alt="{{ .name }}" class="thm-badge-image" loading="lazy" />
+            </div>
+            <span class="thm-badge-label">{{ .name }}</span>
+          </div>
+          {{ end }}
+        </div>
+      </div>
+    </div>
+    {{ end }}
+  </section>
+</div>
+
+<style>
+  .tryhackme-wrapper {
+    width: 100%;
+    max-width: 820px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: calc(100vh - 240px);
+    padding: 1.5rem 0;
+  }
+
+  .tryhackme-badge-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 220px;
+  }
+
+  .tryhackme-badge-wrapper iframe {
+    max-width: 100% !important;
+    border: none;
+    border-radius: 0.75rem;
+  }
+
+  .thm-badges-section {
+    width: 100%;
+    position: relative;
+    margin-top: 2.25rem;
+  }
+
+  .thm-badges-slider-wrapper {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 0.25rem 0;
+    mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+  }
+
+  .thm-badges-slider {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    white-space: nowrap;
+    padding: 0.75rem 1.5rem;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .thm-badges-slider::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  .thm-badges-slider:active {
+    cursor: grabbing;
+  }
+
+  .thm-badge-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 136px;
+    min-width: 136px;
+    max-width: 136px;
+    height: 114px;
+    min-height: 114px;
+    max-height: 114px;
+    padding: 0.75rem 0.5rem;
+    box-sizing: border-box;
+    border-radius: 0.75rem;
+    background-color: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  :is(.dark) .thm-badge-card {
+    background-color: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .thm-badge-card:hover {
+    transform: translateY(-4px) scale(1.04);
+    background-color: rgba(0, 0, 0, 0.06);
+    border-color: rgba(139, 92, 246, 0.4);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  :is(.dark) .thm-badge-card:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: rgba(167, 139, 250, 0.4);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 12px rgba(167, 139, 250, 0.15);
+  }
+
+  .thm-badge-icon-box {
+    width: 58px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.45rem;
+    flex-shrink: 0;
+  }
+
+  .thm-badge-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+    transition: transform 0.25s ease;
+  }
+
+  .thm-badge-card:hover .thm-badge-image {
+    transform: scale(1.08);
+  }
+
+  .thm-badge-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    max-width: 100%;
+    color: #4b5563;
+    letter-spacing: -0.01em;
+  }
+
+  :is(.dark) .thm-badge-label {
+    color: #d1d5db;
+  }
+</style>
+
+<script>
+  (function() {
+    var slider = document.getElementById('thm-badges-slider');
+    if (!slider) return;
+
+    var isDown = false;
+    var startX = 0;
+    var scrollLeft = 0;
+
+    slider.addEventListener('mousedown', function(e) {
+      isDown = true;
+      slider.classList.add('active');
+      startX = e.pageX - slider.offsetLeft;
+      scrollLeft = slider.scrollLeft;
+    });
+
+    slider.addEventListener('mouseleave', function() {
+      isDown = false;
+      slider.classList.remove('active');
+    });
+
+    slider.addEventListener('mouseup', function() {
+      isDown = false;
+      slider.classList.remove('active');
+    });
+
+    slider.addEventListener('mousemove', function(e) {
+      if (!isDown) return;
+      e.preventDefault();
+      var x = e.pageX - slider.offsetLeft;
+      var walk = (x - startX) * 1.6;
+      slider.scrollLeft = scrollLeft - walk;
+    });
+
+    slider.addEventListener('wheel', function(e) {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        e.preventDefault();
+        slider.scrollLeft += e.deltaY;
+      }
+    }, { passive: false });
+  })();
+</script>
+{{ end }}

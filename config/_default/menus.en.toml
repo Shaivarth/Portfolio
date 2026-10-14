@@ -13,6 +13,10 @@ name = "open source"
 url = "/open-source/"
 weight = 25
 
+[[main]]
+name = "tryhackme"
+url = "/tryhackme/"
+weight = 30
 
 [[main]]
 name = "connect"
