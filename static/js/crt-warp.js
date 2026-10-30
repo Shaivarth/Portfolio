@@ -424,7 +424,7 @@ void main() {
         intro: true,
         mouseReact: true,
         mouseStrength: 0.5,
-        changeOnClick: true,
+        changeOnClick: false,
         dpr: 2,
         fps: 60,
         paused: false
@@ -578,13 +578,12 @@ void main() {
     try {
       var savedTime = sessionStorage.getItem('crt_warp_time');
       var savedClock = sessionStorage.getItem('crt_warp_clock');
-      var savedChannel = sessionStorage.getItem('crt_warp_channel');
       if (savedTime && savedClock) {
         state.time = parseFloat(savedTime) || 0;
         state.clock = parseFloat(savedClock) || 0;
-        state.channel = parseInt(savedChannel, 10) || 0;
         state.introAt = -999;
       }
+      state.channel = 0;
     } catch (e) { }
 
     var ensureTargets = function () {
@@ -740,6 +739,7 @@ void main() {
       draw(null, state.width, state.height);
     };
 
+    var lastSaveClock = 0;
     var tick = function (now) {
       state.raf = requestAnimationFrame(tick);
       if (!state.visible || document.hidden || state.lost) {
@@ -755,6 +755,15 @@ void main() {
       state.clock += dt;
       if (state.introAt < 0) state.introAt = state.clock;
       if (!s.paused && !reduced) state.time += dt * s.speed;
+
+      if (state.clock - lastSaveClock > 0.5) {
+        lastSaveClock = state.clock;
+        try {
+          sessionStorage.setItem('crt_warp_time', state.time.toString());
+          sessionStorage.setItem('crt_warp_clock', state.clock.toString());
+          sessionStorage.setItem('crt_warp_channel', '0');
+        } catch (e) { }
+      }
 
       var m = state.magnet;
       var omega = TAU / 0.3;
@@ -814,7 +823,7 @@ void main() {
 
     var onDown = function (event) {
       var s = settings;
-      if (!s.changeOnClick || event.button !== 0) return;
+      if (!s.changeOnClick || event.pointerType === 'touch' || event.button !== 0) return;
       if (
         event.target instanceof Element &&
         event.target.closest('a, button, input, textarea, select, label, [role="button"], img, .agent-avatar, .pr-header-row, .thm-badge-item, iframe')
@@ -824,7 +833,6 @@ void main() {
       var point = local(event);
       if (!point.inside) return;
       if (prefersReduced()) {
-        state.channel += 1;
         return;
       }
       if (state.flipAt >= 0) return;
@@ -851,6 +859,10 @@ void main() {
 
     window.addEventListener('pointermove', onMove, { passive: true });
     window.addEventListener('pointerdown', onDown);
+    window.addEventListener('pointerup', onLeave);
+    window.addEventListener('pointercancel', onLeave);
+    window.addEventListener('touchend', onLeave, { passive: true });
+    window.addEventListener('touchcancel', onLeave, { passive: true });
     document.documentElement.addEventListener('pointerleave', onLeave);
     canvas.addEventListener('webglcontextlost', onLost);
 
@@ -880,10 +892,16 @@ void main() {
       try {
         sessionStorage.setItem('crt_warp_time', state.time.toString());
         sessionStorage.setItem('crt_warp_clock', state.clock.toString());
-        sessionStorage.setItem('crt_warp_channel', state.channel.toString());
+        sessionStorage.setItem('crt_warp_channel', '0');
       } catch (e) { }
     };
     window.addEventListener('beforeunload', onBeforeUnload);
+    window.addEventListener('pagehide', onBeforeUnload);
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'hidden') {
+        onBeforeUnload();
+      }
+    });
 
     return function cleanup() {
       cancelAnimationFrame(state.raf);
@@ -892,7 +910,13 @@ void main() {
       themeObserver.disconnect();
       window.removeEventListener('pointermove', onMove);
       window.removeEventListener('pointerdown', onDown);
+      window.removeEventListener('pointerup', onLeave);
+      window.removeEventListener('pointercancel', onLeave);
+      window.removeEventListener('touchend', onLeave);
+      window.removeEventListener('touchcancel', onLeave);
       window.removeEventListener('pageshow', onPageShow);
+      window.removeEventListener('beforeunload', onBeforeUnload);
+      window.removeEventListener('pagehide', onBeforeUnload);
       document.documentElement.removeEventListener('pointerleave', onLeave);
       canvas.removeEventListener('webglcontextlost', onLost);
       state.cells.forEach(function (target) {
@@ -934,7 +958,8 @@ void main() {
       mask: 'aperture',
       curvature: 0.25,
       persistence: 0.4,
-      brightness: 0.55
+      brightness: 0.55,
+      changeOnClick: false
     });
   }
 
