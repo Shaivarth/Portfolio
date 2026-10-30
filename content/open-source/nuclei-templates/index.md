@@ -7,6 +7,18 @@ logo: "img/projectdiscovery.png"
 
 Contributions to [ProjectDiscovery/nuclei-templates](https://github.com/projectdiscovery/nuclei-templates), the community-curated vulnerability scanning template library for the Nuclei engine.
 
+### [#17510: fix: reduce false positives in Azure Pipelines exposure template](https://github.com/projectdiscovery/nuclei-templates/pull/17510)
+
+<div class="pr-description">
+
+Fixed false-positive detections in the detection template for **azure-pipelines-exposed** (Azure Pipelines Exposed Configuration).
+
+The template previously matched configuration keywords (`trigger:`, `pool:`, and `variables:`) without restricting evaluation to the response body, and lacked content-type validation. As a result, HTML pages returning HTTP `200` status codes (such as Single Page Application / SPA fallbacks, custom error portals, or soft 404 pages) frequently triggered false alerts if their HTML or inline scripts mentioned those terms.
+
+Added `part: body` to restrict keyword matching strictly to the HTTP response payload and introduced a negative header matcher to discard responses with `Content-Type: text/html`. Valid exposed pipeline definitions served as `application/x-yaml`, `text/plain`, or `application/octet-stream` remain reliably detected while eliminating false positive alerts across web applications.
+
+</div>
+
 ### [#17395: Fix Dell DPI default login detection](https://github.com/projectdiscovery/nuclei-templates/pull/17395)
 
 <div class="pr-description">

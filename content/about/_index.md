@@ -5,4 +5,4 @@ description: "A little about me and what I work on."
 
 Hi, I'm <a href="https://shaivarth.com" class="name-link">Sarthak</a>. I build things in **defensive security** and **backend engineering** mostly around threat detection, packet analysis, and network telemetry.
 
-Outside of tech, I spend time reading philosophy, and writing down thoughts on my [blog](https://blog.shaivarth.com/) site. Feel free to [reach out](/connect/) for a chat.
+Outside of tech, I spend time reading philosophy and [now im also thinking of reading history a little seriously] and writing down thoughts on my [blog](https://blog.shaivarth.com/) site. Feel free to [reach out](/connect/) for a chat.
