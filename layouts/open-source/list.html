@@ -15,19 +15,17 @@
   {{ if .Data.Pages }}
   <div class="os-cards-container">
     {{ range .Pages.ByWeight }}
-    <div class="os-card">
+    <a href="{{ .RelPermalink }}" class="os-card" aria-label="{{ .Title }}">
       {{ if .Params.logo }}
-      <a href="{{ .Permalink }}" class="os-logo-link" aria-label="{{ .Title }}">
+      <div class="os-logo-link" aria-hidden="true">
         <div class="os-logo-wrapper">
           <img src="{{ .Params.logo | relURL }}" alt="{{ .Title }} logo" class="os-logo-img" loading="lazy" />
         </div>
-      </a>
+      </div>
       {{ end }}
       <div class="os-card-info">
         <h2 class="mt-0 mb-0 text-xl font-bold leading-snug text-neutral-900 dark:text-neutral">
-          <a class="text-neutral-800 dark:text-neutral transition-colors" href="{{ .Permalink }}">
-            {{ .Title }}
-          </a>
+          <span class="os-card-title">{{ .Title }}</span>
         </h2>
         {{ with .Params.description }}
         <p class="os-repo-desc mt-1 mb-0 text-sm text-neutral-500 dark:text-neutral-400">
@@ -35,7 +33,7 @@
         </p>
         {{ end }}
       </div>
-    </div>
+    </a>
     {{ end }}
   </div>
 
@@ -79,17 +77,28 @@
     border: 1px solid transparent;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     box-sizing: border-box;
+    text-decoration: none !important;
+    color: inherit !important;
+    cursor: pointer;
   }
 
-  .os-card:hover {
+  .os-card:hover,
+  .os-card:focus-visible {
     background-color: rgba(0, 0, 0, 0.03);
     border-color: rgba(0, 0, 0, 0.08);
     transform: translateY(-2px);
+    text-decoration: none !important;
   }
 
-  :is(.dark) .os-card:hover {
-    background-color: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 255, 255, 0.12);
+  :is(.dark) .os-card:hover,
+  :is(.dark) .os-card:focus-visible {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .os-card:focus-visible {
+    outline: 2px solid #c755f7;
+    outline-offset: 2px;
   }
 
   .os-logo-link {
@@ -156,20 +165,21 @@
     word-break: break-word;
   }
 
-  .os-card h2 a {
+  .os-card h2,
+  .os-card .os-card-title {
     text-decoration: none !important;
     transition: color 0.2s ease;
   }
 
-  .os-card:hover h2 a,
-  .os-card h2 a:hover {
+  .os-card:hover h2,
+  .os-card:hover .os-card-title {
     color: #18181b !important;
     text-decoration: none !important;
   }
 
-  :is(.dark) .os-card:hover h2 a,
-  :is(.dark) .os-card h2 a:hover {
-    color: #f4f4f5 !important;
+  :is(.dark) .os-card:hover h2,
+  :is(.dark) .os-card:hover .os-card-title {
+    color: #fffef9 !important;
     text-decoration: none !important;
   }
 

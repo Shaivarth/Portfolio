@@ -31,9 +31,3 @@ weight = 50
 icon = "github"
 showName = false
 target = "_blank"
-
-[[main]]
-identifier = "appearance"
-weight = 99
-[main.params]
-action = "appearance"

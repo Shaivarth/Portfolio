@@ -48,8 +48,17 @@ article section picture img {
   -webkit-user-drag: none;
 }
 
-/* Purple theme color overrides */
+/* Purple theme color overrides and #fffef9 neutral overrides */
 :root {
+  --color-neutral: 255, 254, 249;
+  --color-neutral-50: 255, 254, 249;
+  --color-neutral-100: 255, 254, 249;
+  --color-neutral-200: 255, 254, 249;
+  --color-neutral-300: 255, 254, 249;
+  --color-neutral-400: 255, 254, 249;
+  --color-neutral-500: 255, 254, 249;
+  --color-neutral-600: 255, 254, 249;
+  --color-neutral-700: 255, 254, 249;
   --color-primary-50: 245, 243, 255;
   --color-primary-100: 237, 233, 254;
   --color-primary-200: 221, 214, 254;
@@ -222,6 +231,284 @@ a[aria-label="Anchor"],
   margin-bottom: 0.35rem !important;
   line-height: 1.6;
 }
+
+/* ==========================================================================
+   CRTWarp Background Component Styles - Site-Wide (React Bits)
+   ========================================================================== */
+
+.crt-warp-bg-fixed {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  background-color: #120f17;
+}
+
+.crt-warp-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.crt-warp-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Dark CRT background base across the whole site to expose CRT Warp and prevent white flashes */
+html {
+  background-color: #120f17 !important;
+}
+
+body {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+header,
+#main-content,
+footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   Icons Color: #fffef9
+   All Icons (Nav, Social, Project, Accordions, Swipe arrows, Resume, Badges)
+   ========================================================================== */
+
+svg,
+.icon,
+.icon svg,
+span.icon,
+span.icon svg,
+.nav-home-link,
+.nav-home-link svg,
+.nav-icon-link,
+.nav-icon-link svg,
+.nav-icon-btn,
+.nav-icon-btn svg,
+.home-social-icons,
+.home-social-icons a,
+.home-social-icons svg,
+.connect-icons,
+.connect-icons a,
+.connect-icons svg,
+.connect-icon-link,
+.connect-icon-link svg,
+.connect-resume-icon,
+.connect-resume-icon svg,
+.project-item svg,
+.projects-grid svg,
+.pr-chevron,
+.pr-chevron svg,
+.pr-redirect-btn,
+.pr-redirect-btn svg,
+.swipe-side-indicator,
+.swipe-side-arrow,
+#the-top a span,
+#to-top a {
+  color: #fffef9 !important;
+}
+
+svg[fill="currentColor"],
+svg path[fill="currentColor"],
+.nav-home-link svg path,
+.home-social-icons svg path,
+.connect-icons svg path {
+  fill: #fffef9 !important;
+}
+
+svg[stroke="currentColor"],
+svg path[stroke="currentColor"],
+svg circle[stroke="currentColor"],
+svg line[stroke="currentColor"],
+svg polyline[stroke="currentColor"] {
+  stroke: #fffef9 !important;
+}
+
+/* Interactive hover highlights for icons */
+.nav-home-link:hover,
+.nav-home-link.is-active,
+.nav-home-link:hover svg,
+.nav-home-link.is-active svg,
+.nav-icon-link:hover,
+.nav-icon-link:hover svg,
+.nav-icon-btn:hover,
+.nav-icon-btn:hover svg,
+.home-social-icons a:hover,
+.home-social-icons a:hover svg,
+.connect-icons a:hover,
+.connect-icons a:hover svg,
+.connect-icon-link:hover,
+.connect-icon-link:hover svg,
+.pr-redirect-btn:hover,
+.pr-redirect-btn:hover svg {
+  color: rgb(192, 132, 252) !important;
+}
+
+.nav-home-link:hover svg path,
+.nav-home-link.is-active svg path,
+.home-social-icons a:hover svg path,
+.connect-icons a:hover svg path,
+.connect-icon-link:hover svg path {
+  fill: rgb(192, 132, 252) !important;
+}
+
+.project-item:hover svg[stroke="currentColor"],
+.project-item:hover svg path[stroke="currentColor"] {
+  stroke: rgb(192, 132, 252) !important;
+}
+
+.project-item:hover svg[fill="currentColor"],
+.project-item:hover svg path[fill="currentColor"] {
+  fill: rgb(192, 132, 252) !important;
+}
+
+/* ==========================================================================
+   All Grey Shade Colors of Text and Icons in #fffef9
+   ========================================================================== */
+
+/* All Tailwind/Congo neutral grey utilities */
+.text-neutral-300,
+.text-neutral-400,
+.text-neutral-500,
+.text-neutral-600,
+.text-neutral-700,
+.text-neutral-800,
+.text-neutral-900,
+.text-neutral,
+.dark .dark\:text-neutral,
+.dark .dark\:text-neutral-300,
+.dark .dark\:text-neutral-400,
+.dark .dark\:text-neutral-500,
+.dark .dark\:text-neutral-600,
+.dark .dark\:text-neutral-700,
+.dark .dark\:text-neutral-800,
+.dark .dark\:text-neutral-900 {
+  color: #fffef9 !important;
+}
+
+/* Base headings, subheadings, and section titles */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+article h1,
+article h2,
+.not-prose h1,
+.not-prose h2,
+.about-header h1 {
+  color: #fffef9 !important;
+  text-shadow: 0 0 20px rgba(199, 85, 247, 0.22);
+}
+
+/* Navigation text links */
+.nav-text-link,
+.nav-text-link span {
+  color: #fffef9 !important;
+}
+
+.nav-text-link:hover span,
+.nav-text-link.is-active span {
+  color: rgb(192, 132, 252) !important;
+  text-decoration: underline !important;
+  text-decoration-color: rgb(192, 132, 252) !important;
+  text-decoration-thickness: 2px !important;
+  text-underline-offset: 4px !important;
+}
+
+/* General prose & paragraph text */
+.prose,
+.prose p,
+.prose span,
+.prose li,
+.about-narrative p,
+.about-narrative strong,
+:is(.dark) .about-narrative p,
+:is(.dark) .about-narrative strong,
+.connect-intro,
+.connect-resume,
+.os-repo-desc,
+.projects-grid p,
+.thm-badges-heading,
+:is(.dark) .thm-badges-heading,
+.pr-description,
+.pr-description p,
+.pr-description li,
+.pr-title-text,
+:is(.dark) .pr-title-text,
+footer,
+footer p,
+footer span,
+figcaption,
+.toc,
+.toc a,
+.breadcrumbs,
+.breadcrumbs a,
+.breadcrumbs span,
+.article-meta,
+.article-meta span,
+.article-meta a {
+  color: #fffef9 !important;
+}
+
+/* Bold / Strong accents */
+strong,
+b,
+.prose strong,
+.prose b,
+.dark .prose strong,
+.dark .prose b {
+  color: #fffef9 !important;
+}
+
+/* Code tags */
+.prose :not(pre) > code,
+.dark .prose :not(pre) > code {
+  color: #fffef9 !important;
+  background-color: rgba(255, 254, 249, 0.08) !important;
+}
+
+/* Description card containers */
+.pr-description,
+:is(.dark) .pr-description {
+  background-color: rgba(255, 254, 249, 0.04) !important;
+  border: 1px solid rgba(255, 254, 249, 0.12) !important;
+  color: #fffef9 !important;
+}
+
+.pr-redirect-btn {
+  background-color: rgba(255, 254, 249, 0.08) !important;
+  color: #fffef9 !important;
+}
+
+.pr-redirect-btn:hover {
+  background-color: rgba(192, 132, 252, 0.18) !important;
+  color: rgb(192, 132, 252) !important;
+}
+
+/* Footer links */
+footer a {
+  color: #fffef9 !important;
+}
+
+footer a:hover {
+  color: rgb(192, 132, 252) !important;
+}
+
+
 
 
 

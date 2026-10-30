@@ -1,7 +1,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="{{ .Site.Params.defaultThemeColor | default "#ffffff" }}" />
+  <meta name="theme-color" content="{{ .Site.Params.defaultThemeColor | default "#120f17" }}" />
   {{/* Title */}}
   {{ if .IsHome -}}
   <title>Shaivarth — Sarthak Mishra</title>
@@ -17,7 +17,7 @@
   {{ $jsAppearance = $jsAppearance | resources.Minify | resources.Fingerprint $algorithm }}
   <script
     type="text/javascript"
-    src="{{ $jsAppearance.Permalink }}"
+    src="{{ $jsAppearance.RelPermalink }}"
     integrity="{{ $jsAppearance.Data.Integrity }}"
   ></script>
   {{ $cssScheme := resources.Get (printf "css/schemes/%s.css" (lower .Site.Params.colorScheme | default "congo")) }}
@@ -35,7 +35,7 @@
   <link
     type="text/css"
     rel="stylesheet"
-    href="{{ $bundleCSS.Permalink }}"
+    href="{{ $bundleCSS.RelPermalink }}"
     integrity="{{ $bundleCSS.Data.Integrity }}"
   />
   {{ if .Site.Params.enableSearch | default false }}
@@ -66,7 +66,7 @@
       defer
       type="text/javascript"
       id="script-bundle"
-      src="{{ $bundleJS.Permalink }}"
+      src="{{ $bundleJS.RelPermalink }}"
       integrity="{{ $bundleJS.Data.Integrity }}"
       data-copy="{{ i18n "code.copy" }}"
       data-copied="{{ i18n "code.copied" }}"

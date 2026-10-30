@@ -21,34 +21,13 @@
         </li>
 
         {{ range .Site.Menus.main }}
+          {{ if not (eq .Params.action "appearance") }}
           {{ $isActive := false }}
           {{ if and (ne .URL "/") (hasPrefix $currentRel .URL) }}
             {{ $isActive = true }}
           {{ end }}
           <li class="nav-menu-item group flex items-center">
-            {{ if eq .Params.action "appearance" }}
-              {{ if site.Params.footer.showAppearanceSwitcher | default false }}
-                <button
-                  id="appearance-switcher-1"
-                  type="button"
-                  aria-label="appearance switcher"
-                  class="flex items-center cursor-pointer nav-icon-btn"
-                >
-                  <span
-                    class="group-dark:hover:text-primary-400 inline transition-colors group-hover:text-primary-600 dark:hidden"
-                    title="{{ i18n "footer.dark_appearance" }}"
-                  >
-                    {{ partial "icon.html" "moon" }}
-                  </span>
-                  <span
-                    class="group-dark:hover:text-primary-400 hidden transition-colors group-hover:text-primary-600 dark:inline"
-                    title="{{ i18n "footer.light_appearance" }}"
-                  >
-                    {{ partial "icon.html" "sun" }}
-                  </span>
-                </button>
-              {{ end }}
-            {{ else if .Params.icon }}
+            {{ if .Params.icon }}
               <a
                 href="{{ .URL }}"
                 title="{{ .Title | default .Name }}"
@@ -76,6 +55,7 @@
               </a>
             {{ end }}
           </li>
+          {{ end }}
         {{ end }}
       </ul>
 
@@ -99,21 +79,26 @@
 
         /* Default neutral colors for links */
         .nav-home-link {
-          color: #27272a;
+          color: #fffef9 !important;
         }
 
         :is(.dark) .nav-home-link {
-          color: #e4e4e7;
+          color: #fffef9 !important;
         }
 
         .nav-text-link {
-          color: #27272a;
+          color: #fffef9 !important;
           text-decoration: none !important;
         }
 
         :is(.dark) .nav-text-link {
-          color: #e4e4e7;
+          color: #fffef9 !important;
           text-decoration: none !important;
+        }
+
+        .nav-icon-link,
+        .nav-icon-btn {
+          color: #fffef9 !important;
         }
 
         /* Active and hover states are 100% identical in color and underline */

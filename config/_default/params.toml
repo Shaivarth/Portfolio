@@ -1,6 +1,7 @@
 colorScheme = "violet"
 defaultAppearance = "dark"
-autoSwitchAppearance = true
+autoSwitchAppearance = false
+defaultThemeColor = "#120f17"
 
 enableSearch = false
 enableCodeCopy = true
@@ -17,7 +18,7 @@ title = "Sārthak M."
 [footer]
 showCopyright = true
 showThemeAttribution = false
-showAppearanceSwitcher = true
+showAppearanceSwitcher = false
 showScrollToTop = false
 
 [homepage]
