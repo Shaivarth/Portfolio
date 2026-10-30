@@ -55,5 +55,3 @@ badges:
   - name: "cat linux.txt"
     image: "/img/tryhackme/badges/cat-linux-txt.png"
 ---
-
-<script src="https://tryhackme.com/badge/t/da1ee3f107da750b04c01a23cf89f9ff92e1d9e6c749357ad8e8b83805188d28b890abd86af38e025fbe4fadd239edee?theme=dark"></script>
