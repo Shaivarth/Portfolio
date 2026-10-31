@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://shaivarth.com/sitemap.xml
