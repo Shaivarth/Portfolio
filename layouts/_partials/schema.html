@@ -17,14 +17,40 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "Shaivarth",
-  "alternateName": [
-    "Shaivarth",
-    "Sarthak Mishra",
-    "shaivarth.com"
-  ],
-  "url": "https://shaivarth.com/"
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://shaivarth.com/#website",
+      "name": "Shaivarth",
+      "alternateName": [
+        "Shaivarth",
+        "Sarthak Mishra",
+        "shaivarth.com"
+      ],
+      "url": "https://shaivarth.com/",
+      "description": "Shaivarth is the personal website and security engineering portfolio of Sarthak Mishra.",
+      "publisher": {
+        "@id": "https://shaivarth.com/#person"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://shaivarth.com/#person",
+      "name": "Sarthak Mishra",
+      "alternateName": "Shaivarth",
+      "url": "https://shaivarth.com/",
+      "image": "https://shaivarth.com/img/coderagent.webp",
+      "jobTitle": "Cybersecurity & Backend Development",
+      "sameAs": [
+        "https://github.com/Shaivarth",
+        "https://www.linkedin.com/in/shaivarth/",
+        "https://x.com/shaivarth",
+        "https://tryhackme.com/p/sarthakmishra",
+        "https://blog.shaivarth.com/",
+        "https://gitlab.com/sarthakmishra"
+      ]
+    }
+  ]
 }
 </script>
 {{ else if .IsPage }}
