@@ -285,12 +285,25 @@
       });
     }
 
-    // Prefetch all known routes in background so swiping never waits on network
-    ROUTES.forEach(function (r) {
-      if (r !== currentPath) {
-        fetchPage(r).catch(function () {});
-      }
-    });
+    // Prefetch routes in background during idle time so swiping is instant without competing with initial page load
+    var schedulePrefetch = function () {
+      [prevRoute, nextRoute].forEach(function (url) {
+        if (url) fetchPage(url).catch(function () {});
+      });
+      setTimeout(function () {
+        ROUTES.forEach(function (r) {
+          if (r !== currentPath) {
+            fetchPage(r).catch(function () {});
+          }
+        });
+      }, 2000);
+    };
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(schedulePrefetch, { timeout: 2000 });
+    } else {
+      setTimeout(schedulePrefetch, 800);
+    }
 
     function updateNavState() {
       currentIndex = ROUTES.indexOf(currentPath);

@@ -30,7 +30,7 @@
       {{ partial "header/basic.html" . }}
     {{ end }}
     <div class="relative flex grow flex-col">
-      <main id="main-content" class="grow">
+      <main id="main-content" class="grow flex flex-col">
         {{ block "main" . }}{{ end }}
       </main>
       {{ if .Site.Params.footer.showScrollToTop | default true }}
@@ -54,7 +54,13 @@
         {{- partial "search.html" . -}}
       {{ end }}
     </div>
-    <script defer src="{{ "js/crt-warp.js" | relURL }}"></script>
+    {{ $crtJs := resources.Get "js/crt-warp.js" }}
+    {{ if $crtJs }}
+      {{ $crtJs = $crtJs | resources.Minify | resources.Fingerprint }}
+      <script defer src="{{ $crtJs.RelPermalink }}" integrity="{{ $crtJs.Data.Integrity }}"></script>
+    {{ else }}
+      <script defer src="{{ "js/crt-warp.js" | relURL }}"></script>
+    {{ end }}
   </body>
 </html>
 

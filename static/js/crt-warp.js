@@ -786,7 +786,6 @@ void main() {
       state.seen = s;
       if (state.quiet > 90) return;
 
-      resize();
       render(dt, reduced);
     };
 
@@ -942,31 +941,44 @@ void main() {
     var container = document.getElementById(ROOT);
     if (!container) return;
 
-    // Move wrapper outside main-content to avoid CSS transform stacking context
-    var bgWrapper = document.getElementById('crt-warp-bg');
-    if (bgWrapper && bgWrapper.parentElement !== document.body) {
-      document.body.prepend(bgWrapper);
+    var startWarp = function () {
+      // Move wrapper outside main-content to avoid CSS transform stacking context
+      var bgWrapper = document.getElementById('crt-warp-bg');
+      if (bgWrapper && bgWrapper.parentElement !== document.body) {
+        document.body.prepend(bgWrapper);
+      }
+
+      document.documentElement.classList.add('home-crt-active');
+      document.documentElement.classList.add('crt-bg-active');
+
+      initCRTWarp(container, {
+        color: '#c755f7',
+        backgroundColor: '#120f17',
+        lightMode: false,
+        mask: 'aperture',
+        curvature: 0.25,
+        persistence: 0.4,
+        brightness: 0.55,
+        changeOnClick: false,
+        fps: window.innerWidth < 768 ? 24 : 60
+      });
+    };
+
+    var schedule = function () {
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(startWarp, { timeout: 1500 });
+      } else {
+        setTimeout(startWarp, 300);
+      }
+    };
+
+    if (document.readyState === 'complete') {
+      schedule();
+    } else {
+      window.addEventListener('load', schedule);
     }
-
-    document.documentElement.classList.add('home-crt-active');
-    document.documentElement.classList.add('crt-bg-active');
-
-    initCRTWarp(container, {
-      color: '#c755f7',
-      backgroundColor: '#120f17',
-      lightMode: false,
-      mask: 'aperture',
-      curvature: 0.25,
-      persistence: 0.4,
-      brightness: 0.55,
-      changeOnClick: false
-    });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', autoMount);
-  } else {
-    autoMount();
-  }
+  autoMount();
 })();
 
