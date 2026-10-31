@@ -29,6 +29,11 @@ article section picture img {
   justify-content: center !important;
   align-items: center !important;
   margin-bottom: 1.25rem !important;
+  width: 170px;
+  height: 106.4px;
+  aspect-ratio: 1585 / 992;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
 .agent-avatar {
@@ -36,7 +41,8 @@ article section picture img {
   max-width: 170px !important;
   min-width: unset !important;
   min-height: unset !important;
-  height: auto !important;
+  height: 106.4px !important;
+  aspect-ratio: 1585 / 992;
   max-height: none !important;
   display: block !important;
   object-fit: contain !important;

@@ -14,12 +14,10 @@
   {{ $assets := newScratch }}
   {{ $algorithm := .Site.Params.fingerprintAlgorithm | default "sha256" }}
   {{ $jsAppearance := resources.Get "js/appearance.js" }}
-  {{ $jsAppearance = $jsAppearance | resources.Minify | resources.Fingerprint $algorithm }}
-  <script
-    type="text/javascript"
-    src="{{ $jsAppearance.RelPermalink }}"
-    integrity="{{ $jsAppearance.Data.Integrity }}"
-  ></script>
+  {{ if $jsAppearance }}
+    {{ $jsAppearanceMin := $jsAppearance | resources.Minify }}
+    <script>{{ $jsAppearanceMin.Content | safeJS }}</script>
+  {{ end }}
   {{ $cssScheme := resources.Get (printf "css/schemes/%s.css" (lower .Site.Params.colorScheme | default "congo")) }}
   {{ if not $cssScheme }}
     {{ $cssScheme = resources.Get "css/schemes/congo.css" }}

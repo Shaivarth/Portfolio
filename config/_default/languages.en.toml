@@ -10,7 +10,7 @@ description = "Cybersecurity and backend development portfolio."
 
 [params.author]
 name = "Sarthak Mishra"
-image = "img/coderagent.png"
+image = "img/coderagent.webp"
 headline = "Cybersecurity & Backend Development"
 bio = "Computer Science student building practical security tools, backend systems, and network monitoring solutions."
 links = [
