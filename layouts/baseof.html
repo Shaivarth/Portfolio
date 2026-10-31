@@ -57,7 +57,7 @@
     {{ $crtJs := resources.Get "js/crt-warp.js" }}
     {{ if $crtJs }}
       {{ $crtJs = $crtJs | resources.Minify | resources.Fingerprint }}
-      <script defer src="{{ $crtJs.RelPermalink }}" integrity="{{ $crtJs.Data.Integrity }}"></script>
+      <script defer src="{{ $crtJs.RelPermalink }}"></script>
     {{ else }}
       <script defer src="{{ "js/crt-warp.js" | relURL }}"></script>
     {{ end }}
