@@ -13,7 +13,7 @@ def remove_readonly(func, path, exc_info):
 
 # Run clean production build
 print("Building production site with Hugo...")
-subprocess.run(["hugo", "--gc", "--minify", "-e", "production"], cwd=repo_dir, check=True)
+subprocess.run(["hugo", "--gc", "--cleanDestinationDir", "--minify", "-e", "production"], cwd=repo_dir, check=True)
 
 if os.path.exists(temp_dir):
     shutil.rmtree(temp_dir, onerror=remove_readonly)
