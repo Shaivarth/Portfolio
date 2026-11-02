@@ -1,4 +1,5 @@
-<footer class="py-10 print:hidden">
+{{ if ne .Section "open-source" }}
+<footer class="py-10 print:hidden site-footer">
   <div class="flex items-center justify-between">
     <div>
       <p class="text-sm text-neutral-500 dark:text-neutral-400">
@@ -18,3 +19,4 @@
     </div>
   </div>
 </footer>
+{{ end }}

@@ -281,7 +281,13 @@
       pageCache.set(currentPath, {
         title: document.title,
         html: initialMain.innerHTML,
-        scripts: []
+        scripts: Array.from(initialMain.querySelectorAll('script')).map(function (s) {
+          return {
+            src: s.src,
+            type: s.type,
+            textContent: s.textContent
+          };
+        })
       });
     }
 
@@ -328,6 +334,12 @@
       }
       if (rightIndicator) {
         rightIndicator.style.display = nextRoute ? 'inline-flex' : 'none';
+      }
+
+      // Hide site footer on open-source section
+      var siteFooter = document.querySelector('footer.site-footer') || document.querySelector('body > div.relative > footer');
+      if (siteFooter) {
+        siteFooter.style.display = currentPath.startsWith('/open-source/') ? 'none' : '';
       }
 
       // Update active nav links in header
@@ -411,6 +423,11 @@
               document.body.appendChild(script);
               script.remove();
             });
+
+            window.dispatchEvent(new CustomEvent('page:swiped', { detail: { path: normTarget } }));
+            if (typeof window.initPROpenSource === 'function') {
+              try { window.initPROpenSource(); } catch (e) {}
+            }
 
             // Update navigation indicator arrows and active states
             updateNavState();

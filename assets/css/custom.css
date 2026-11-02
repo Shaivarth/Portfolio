@@ -518,3 +518,10 @@ footer a:hover {
 
 
 
+
+/* Hide footer completely on Open Source tab and subpages */
+body:has([data-section='open-source']) footer,
+body:has(.open-source-wrapper) footer,
+body:has(.os-repo-header) footer {
+  display: none !important;
+}

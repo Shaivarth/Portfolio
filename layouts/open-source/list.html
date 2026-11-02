@@ -1,5 +1,5 @@
 {{ define "main" }}
-<div class="open-source-wrapper flex flex-col items-center text-center">
+<div class="open-source-wrapper flex flex-col items-center text-center" data-section="open-source">
   {{ if .Params.showBreadcrumbs | default (.Site.Params.list.showBreadcrumbs | default false) }}
   <header class="w-full text-center">
     {{ partial "breadcrumbs.html" . }}
