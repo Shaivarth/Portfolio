@@ -2,7 +2,7 @@
   {{- $images := .Resources.ByType "image" }}
   {{- $cover := $images.GetMatch (.Params.cover | default "*cover*") }}
   {{- $feature := $images.GetMatch (.Params.feature | default "*feature*") | default $cover }}
-  <article class="max-w-prose mx-auto" data-section="open-source">
+  <article class="max-w-prose mx-auto">
     <header class="max-w-prose">
       {{ if .Params.showBreadcrumbs | default (.Site.Params.article.showBreadcrumbs | default false) }}
         {{ partial "breadcrumbs.html" . }}
@@ -53,6 +53,23 @@
         {{ .Content | emojify }}
       </div>
     </section>
+    <footer class="max-w-prose pt-8 print:hidden">
+      {{ partial "author.html" . }}
+      {{ partial "sharing-links.html" . }}
+      {{ partial "article-pagination.html" . }}
+      {{ if .Params.showComments | default (.Site.Params.article.showComments | default false) }}
+        {{ if templates.Exists "_partials/comments.html" }}
+          <div class="pt-3">
+            <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+            <div class="pt-3">
+              {{ partial "comments.html" . }}
+            </div>
+          </div>
+        {{ else }}
+          {{ warnf "[CONGO] Comments are enabled for %s but no comments partial exists." .File.Path }}
+        {{ end }}
+      {{ end }}
+    </footer>
   </article>
 
   <style>
@@ -351,7 +368,6 @@
         setupPRCollapsibles();
       };
 
-      // Run immediately
       window.initPROpenSource();
 
       if (document.readyState === 'loading') {
@@ -364,23 +380,6 @@
       window.addEventListener('page:swiped', function() {
         setTimeout(window.initPROpenSource, 50);
       });
-
-      // MutationObserver on #main-content to guarantee initialization if content is swapped
-      var mainEl = document.getElementById('main-content');
-      if (mainEl && !window._prObserverAttached) {
-        window._prObserverAttached = true;
-        var observer = new MutationObserver(function(mutations) {
-          for (var i = 0; i < mutations.length; i++) {
-            if (mutations[i].addedNodes.length > 0) {
-              if (document.querySelector('.prose h3 a') && !document.querySelector('.pr-item')) {
-                window.initPROpenSource();
-                break;
-              }
-            }
-          }
-        });
-        observer.observe(mainEl, { childList: true, subtree: true });
-      }
     })();
   </script>
 {{ end }}

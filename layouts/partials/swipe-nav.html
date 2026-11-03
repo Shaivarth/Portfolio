@@ -336,12 +336,6 @@
         rightIndicator.style.display = nextRoute ? 'inline-flex' : 'none';
       }
 
-      // Hide site footer on open-source section
-      var siteFooter = document.querySelector('footer.site-footer') || document.querySelector('body > div.relative > footer');
-      if (siteFooter) {
-        siteFooter.style.display = currentPath.startsWith('/open-source/') ? 'none' : '';
-      }
-
       // Update active nav links in header
       document.querySelectorAll('.nav-text-link').forEach(function (link) {
         var href = normalizePath(link.getAttribute('href'));
