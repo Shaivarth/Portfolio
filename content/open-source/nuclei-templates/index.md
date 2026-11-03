@@ -5,15 +5,17 @@ weight: 10
 logo: "img/projectdiscovery.png"
 ---
 
+Contributions to [ProjectDiscovery/nuclei-templates](https://github.com/projectdiscovery/nuclei-templates), the community-curated vulnerability scanning template library for the Nuclei engine.
+
 ### [#17602: fix: reduces false positive in una-cms-rce](https://github.com/projectdiscovery/nuclei-templates/pull/17602)
 
 <div class="pr-description">
 
-Fixed false-positive detections in the template for **una-cms-rce** (UNA CMS &lt;= 14.0.0-RC4 PHP Object Injection to Remote Code Execution).
+Fixed false-positive detections in the detection template for **una-cms-rce** (UNA CMS &lt;= 14.0.0-RC4 PHP Object Injection to Remote Code Execution).
 
 The template previously triggered false-positive critical RCE findings on non-UNA targets (such as custom 404 error portals and SPA bundles). This occurred because the second verification request ran unconditionally without flow gating, lacked an HTTP `200` status check, and matched generic static response strings (`Expires`, `Value`, `uid=`, and `groups=`) with default `OR` logic.
 
-Added `flow: http(1) && http(2)` to gate the second verification request behind a successful first request, enforced an HTTP `200` status code with `matchers-condition: and`, and replaced generic static word matchers with dynamic token verification (`{{randstr}}` and `uid=`) matching the injected payload. Also removed the redundant `/cache_public/sh.php` fallback probe, updated `max-request: 2`, and added `(?s)` with non-greedy matching to the regex extractor.
+Added `flow: http(1) && http(2)` to gate execution of the second verification request behind a successful first request, enforced an HTTP `200` status code with `matchers-condition: and`, and replaced generic static word matchers with dynamic token verification (`{{randstr}}` and `uid=`) matching the injected payload. Also removed the redundant `/cache_public/sh.php` fallback probe, updated `max-request: 2`, and added `(?s)` with non-greedy matching to the regex extractor.
 
 </div>
 
