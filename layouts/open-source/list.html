@@ -1,5 +1,5 @@
 {{ define "main" }}
-<div class="open-source-wrapper flex flex-col items-center text-center" data-section="open-source">
+<div class="open-source-wrapper flex flex-col items-center text-center">
   {{ if .Params.showBreadcrumbs | default (.Site.Params.list.showBreadcrumbs | default false) }}
   <header class="w-full text-center">
     {{ partial "breadcrumbs.html" . }}
@@ -74,7 +74,8 @@
     width: 100%;
     padding: 0.85rem 1.15rem;
     border-radius: 0.75rem;
-    border: 1px solid transparent;
+    background-color: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.08);
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     box-sizing: border-box;
     text-decoration: none !important;
@@ -82,18 +83,23 @@
     cursor: pointer;
   }
 
+  :is(.dark) .os-card {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
   .os-card:hover,
   .os-card:focus-visible {
-    background-color: rgba(0, 0, 0, 0.03);
-    border-color: rgba(0, 0, 0, 0.08);
+    background-color: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.14);
     transform: translateY(-2px);
     text-decoration: none !important;
   }
 
   :is(.dark) .os-card:hover,
   :is(.dark) .os-card:focus-visible {
-    background-color: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.15);
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.25);
   }
 
   .os-card:focus-visible {
