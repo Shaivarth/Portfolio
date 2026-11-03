@@ -161,6 +161,7 @@
       gap: 0.55rem;
       flex: 1 1 auto;
       min-width: 0;
+      overflow: hidden;
     }
 
     .pr-chevron {
@@ -193,12 +194,20 @@
       line-height: 1.4;
       font-weight: 600;
       white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1 1 auto;
+      min-width: 0;
     }
 
     .pr-title-text {
       color: #fffef9;
       transition: color 0.2s ease;
+      display: block;
       white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
     }
 
     :is(.dark) .pr-title-text {
@@ -275,12 +284,15 @@
 
       .pr-header-row h3 {
         font-size: 0.95rem;
-        white-space: normal;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .pr-title-text {
-        white-space: normal;
-        word-break: break-word;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .pr-redirect-btn {
@@ -323,6 +335,7 @@
             const titleText = document.createElement('span');
             titleText.className = 'pr-title-text';
             titleText.textContent = prTitle;
+            titleText.title = prTitle;
             h3.innerHTML = '';
             h3.appendChild(titleText);
             titleWrap.appendChild(h3);

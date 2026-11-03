@@ -7,6 +7,22 @@ logo: "img/projectdiscovery.png"
 
 Contributions to [ProjectDiscovery/nuclei-templates](https://github.com/projectdiscovery/nuclei-templates), the community-curated vulnerability scanning template library for the Nuclei engine.
 
+### [#17660: docs: document template signing and the # digest line in CONTRIBUTING.md](https://github.com/projectdiscovery/nuclei-templates/pull/17660)
+
+<div class="pr-description">
+
+Authored official contributor documentation in **CONTRIBUTING.md** explaining Nuclei's cryptographic template signing architecture and the trailing `# digest:` line.
+
+The trailing `# digest:` line was frequently misunderstood by contributors as obsolete comments or metadata, leading to PRs that stripped digests, manually edited signatures, or signed templates with personal keys. For `code` and `javascript` protocols, signing with non-ProjectDiscovery keys failed CI automated checks because Nuclei restricts re-signing execution protocols for security.
+
+Added a dedicated documentation section and reference rules detailing:
+- The cryptographic nature of the ECDSA signature and key fingerprint.
+- The automated **Template Sign** GitHub Actions workflow that signs modified templates upon merge into `main`.
+- Contribution rules: leaving existing digests intact, submitting new templates unsigned, and avoiding personal signing keys.
+- Runtime signature verification rules, including mandatory valid signatures for `code` and `javascript` protocol execution.
+
+</div>
+
 ### [#17602: fix: reduces false positive in una-cms-rce](https://github.com/projectdiscovery/nuclei-templates/pull/17602)
 
 <div class="pr-description">
