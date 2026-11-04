@@ -7,6 +7,22 @@ logo: "img/sigma.png"
 
 Upstream contributions to [SigmaHQ/sigma](https://github.com/SigmaHQ/sigma), the industry standard generic signature format for SIEM detection engineering.
 
+### [#6549: Fix OriginalFileName leading backslash in Windows process creation rules](https://github.com/SigmaHQ/sigma/pull/6549)
+
+<div class="pr-description">
+
+Fixed dead `OriginalFileName` detection criteria across seven Windows process creation detection rules.
+
+In Windows process auditing telemetry (Sysmon Event ID 1 / Security Event ID 4688), the `OriginalFileName` field records the binary's original internal PE header filename without any preceding path. Multiple rules attempted to match this field using values with a leading backslash (e.g. `\msiexec.exe`), causing exact-match filter conditions to never trigger and leaving renamed copies of target binaries undetected.
+
+Removed the leading backslash from `OriginalFileName` across:
+* **MsiExec Execution & Masquerading**: `proc_creation_win_msiexec_dll.yml` and `proc_creation_win_msiexec_masquerading.yml`.
+* **Credential Access & Harvesting**: `proc_creation_win_rpcping_credential_capture.yml` and `proc_creation_win_hktl_inveigh.yml`.
+* **Sensitive File Extraction**: `proc_creation_win_esentutl_sensitive_file_copy.yml`.
+* **Administrative & Script Abuse**: `proc_creation_win_mssql_sqltoolsps_susp_execution.yml` and `proc_creation_win_susp_use_of_te_bin.yml`.
+
+</div>
+
 ### [#6263: Office Autorun Keys Modification Rule Fixes](https://github.com/SigmaHQ/sigma/pull/6263)
 
 <div class="pr-description">
@@ -34,5 +50,3 @@ PR #6239 cut Sigma's test runtime by **5.4×**, saving around **75 sec** on each
 ---
 
 [View all PRs](https://github.com/SigmaHQ/sigma/pulls?q=is%3Apr+author%3AShaivarth) · [Sigma](https://github.com/SigmaHQ/sigma)
-
-
